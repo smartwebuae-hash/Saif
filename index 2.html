@@ -116,6 +116,10 @@ dd .call{margin-inline-start:8px;padding:3px 10px;font-size:.82rem}
 .edrow{display:flex;gap:8px;margin:12px 0 4px}
 .edb{border:1px solid var(--line);background:#fff;border-radius:8px;padding:4px 12px;font:inherit;font-size:.85rem;cursor:pointer}
 .edb.del{color:#B42318;border-color:#F3C4C0}
+.auto{background:#EEF6F1;border:1px dashed #1F7A4D;border-radius:10px;padding:10px 12px;margin-bottom:12px}.auto p{margin:4px 0 8px;font-size:.85rem;color:#33503F}.auto #autoSt{margin:8px 0 0;color:#1F7A4D;font-weight:600}
+#edForm .filled{background:#E3F4EA;border-color:#1F7A4D}
+.pdft{display:flex;align-items:center;justify-content:center;flex-direction:column;width:100%;height:100%;background:#FDECEC;color:#B42318;font-weight:700;text-decoration:none;font-size:.85rem;text-align:center}
+.gal .gpdf{width:84px;height:110px;border-radius:8px;border:1px solid var(--line)}
 #imModal{position:fixed;inset:0;background:rgba(15,23,35,.55);z-index:70;display:none;overflow:auto;padding:16px}
 #imModal.on{display:block}
 .th.big{width:96px;height:128px}.th img{cursor:zoom-in}.th .ix{position:absolute;bottom:2px;inset-inline-start:4px;background:rgba(0,0,0,.55);color:#fff;font-size:11px;border-radius:4px;padding:0 4px}
@@ -160,7 +164,7 @@ dd .call{margin-inline-start:8px;padding:3px 10px;font-size:.82rem}
 
 <div id="lb" role="dialog" aria-modal="true"><div class="bar"><button id="lbPrev" data-t="prev"></button><span id="lbCount"></span><button id="lbNext" data-t="next"></button><button id="lbClose" data-t="close"></button></div><div class="view"><img id="lbImg" alt=""></div></div>
 <div id="toast" role="status"></div>
-<div id="imModal" role="dialog" aria-modal="true"><div class="edbox"><h2 id="imTitle"></h2><div id="imThumbs" class="thumbs"></div><p id="imStatus" class="err"></p><div class="edbtns"><label class="addimg" id="imAddLbl">إضافة صور<input type="file" id="imFiles" accept="image/*" multiple hidden></label><button type="button" id="imDone" class="pri">تم</button></div></div></div>
+<div id="imModal" role="dialog" aria-modal="true"><div class="edbox"><h2 id="imTitle"></h2><div id="imThumbs" class="thumbs"></div><p id="imStatus" class="err"></p><div class="edbtns"><label class="addimg" id="imAddLbl">إضافة صور<input type="file" id="imFiles" accept="image/*,application/pdf" multiple hidden></label><button type="button" id="imDone" class="pri">تم</button></div></div></div>
 <div id="edModal" role="dialog" aria-modal="true"><div class="edbox"><h2 id="edTitle"></h2><form id="edForm" autocomplete="off"></form></div></div>
 <div id="app" class="wrap" hidden>
   <header>
@@ -201,11 +205,11 @@ const LESSOR={ar:"اي تو زد بروجيكتس لإدارة المشاريع 
 const LESSOR_PHONE="971508632030";
 
 const T={
-ar:{ed:{imgsBtn:"الصور",imgsT:"صور العقد",noImgs:"لا توجد صور بعد.",uploading:"جارٍ رفع الصور…",delImg:"حذف هذه الصورة؟",loading:"جارٍ تحميل البيانات…",saving:"جارٍ الحفظ…",saveErr:"تعذّر الحفظ: ",empty:"لا توجد عقود في قاعدة البيانات بعد. افتح صفحة migrate.html لنقل العقود الحالية.",key:"مفتاح Supabase (anon)",done:"تم",edit:"تعديل",del:"حذف",add:"+ إضافة عقد",save:"حفظ",cancel:"إلغاء",editT:"تعديل العقد",addT:"إضافة عقد جديد",
+ar:{ed:{autoT:"📄 قراءة العقد تلقائياً",autoP:"ارفع ملف PDF العقد (من توثيق / داري) أو صور صفحاته، وتتعبّى البيانات تلقائياً. راجعها ثم احفظ. الملفات تنحفظ مع العقد.",autoBtn:"اختر PDF أو صور",readingPdf:"جارٍ قراءة ملف PDF…",readingImg:"جارٍ قراءة الصورة (قد يأخذ دقيقة)…",autoDone:n=>`تمت تعبئة ${n} حقل تلقائياً (المظللة بالأخضر). راجعها قبل الحفظ.`,autoNone:"ما قدرت أقرأ بيانات من الملف. عبّئ الحقول يدوياً — الملف بينحفظ مع العقد.",pend:n=>`${n} ملف بينحفظ مع العقد`,openPdf:"فتح PDF",imgsT:"صور العقد",noImgs:"لا توجد صور بعد.",uploading:"جارٍ رفع الصور…",delImg:"حذف هذا الملف؟",loading:"جارٍ تحميل البيانات…",saving:"جارٍ الحفظ…",saveErr:"تعذّر الحفظ: ",empty:"لا توجد عقود في قاعدة البيانات بعد. افتح صفحة migrate.html لنقل العقود الحالية.",key:"مفتاح Supabase (anon)",done:"تم",edit:"تعديل",del:"حذف",add:"+ إضافة عقد",save:"حفظ",cancel:"إلغاء",editT:"تعديل العقد",addT:"إضافة عقد جديد",
   confirmDel:u=>`حذف عقد ${u} نهائياً مع صوره؟`,banner:"لديك تعديلات محفوظة على هذا الجهاز فقط. لتظهر للجميع: اضغط «تحميل نسخة للموقع» وارفع الملف على GitHub مكان index 2.html.",
   export:"تحميل نسخة للموقع",reset:"إلغاء كل التعديلات",confirmReset:"سيتم حذف كل التعديلات المحفوظة على هذا الجهاز والرجوع للنسخة الأصلية. متأكد؟",
   saved:"تم الحفظ.",required:"عبّئ الحقول المطلوبة (*).",dup:"رقم العقد موجود في عقد آخر.",exported:"تم تحميل الملف. ارفعه على GitHub مكان index 2.html.",
-  imgs:"صور العقد",addImgs:"إضافة صور",notesHint:"كل ملاحظة في سطر",imgBusy:"جارٍ تجهيز الصور…",
+  imgs:"صور العقد",addImgs:"إضافة صور أو PDF",notesHint:"كل ملاحظة في سطر",imgBusy:"جارٍ تجهيز الصور…",
   f:{unit:"الوحدة * (مثال: محل 12)",plot:"القسيمة *",kind:"نوع الوحدة",area:"المساحة م²",reg:"رقم تسجيل الوحدة",premise:"معرّف العقار",tenant:"المستأجر *",tenant_en:"اسم المستأجر بالإنجليزي",phone:"الهاتف",no:"رقم العقد *",issue:"تاريخ الإصدار",start:"تاريخ البداية *",end:"تاريخ النهاية *",annual:"الإيجار السنوي *",value:"قيمة العقد",n:"عدد الدفعات *",method:"طريقة السداد",registry:"التسجيل",notes:"ملاحظات",cheque:"الشيك المرفق"}},
 title:"عقود الإيجار",gateP:"ادخل باسم المستخدم وكلمة المرور.",user:"البريد الإلكتروني",pass:"كلمة المرور",signin:"دخول",badLogin:"البريد أو كلمة المرور غير صحيحة.",
  prev:"السابقة",next:"التالية",close:"إغلاق",logout:"خروج",langBtn:"English",
@@ -226,11 +230,11 @@ title:"عقود الإيجار",gateP:"ادخل باسم المستخدم وكل
  pdfEnds:e=>`ينتهي هذا العقد في ${e}. نرجو التواصل معنا لترتيب التجديد.`,pdfEnded:e=>`انتهى هذا العقد في ${e}. نرجو التواصل معنا فوراً لتجديده.`,
  pdfContact:p=>`للتواصل: ${p}`,pdfDate:d=>`تاريخ الإصدار: ${d}`,
  msg:(t,no,u,e)=>`مرحباً ${t}،\nمرفق ملخص عقد الإيجار رقم ${no} (${u}).\nتاريخ نهاية العقد: ${e}.\nمع التحية،\n${LESSOR.ar}`},
-en:{ed:{imgsBtn:"Images",imgsT:"Contract images",noImgs:"No images yet.",uploading:"Uploading images…",delImg:"Delete this image?",loading:"Loading data…",saving:"Saving…",saveErr:"Couldn't save: ",empty:"No contracts in the database yet. Open migrate.html to move the current contracts.",key:"Supabase key (anon)",done:"Done",edit:"Edit",del:"Delete",add:"+ Add contract",save:"Save",cancel:"Cancel",editT:"Edit contract",addT:"Add new contract",
+en:{ed:{autoT:"📄 Read contract automatically",autoP:"Upload the contract PDF (from Tawtheeq / Dari) or photos of its pages and the details fill in automatically. Review them, then save. The files are saved with the contract.",autoBtn:"Choose PDF or photos",readingPdf:"Reading PDF…",readingImg:"Reading photo (may take a minute)…",autoDone:n=>`${n} fields filled automatically (highlighted in green). Review them before saving.`,autoNone:"Couldn't read details from the file. Fill the fields manually — the file will be saved with the contract.",pend:n=>`${n} file(s) will be saved with the contract`,openPdf:"Open PDF",imgsT:"Contract images",noImgs:"No images yet.",uploading:"Uploading images…",delImg:"Delete this file?",loading:"Loading data…",saving:"Saving…",saveErr:"Couldn't save: ",empty:"No contracts in the database yet. Open migrate.html to move the current contracts.",key:"Supabase key (anon)",done:"Done",edit:"Edit",del:"Delete",add:"+ Add contract",save:"Save",cancel:"Cancel",editT:"Edit contract",addT:"Add new contract",
   confirmDel:u=>`Permanently delete the ${u} contract and its images?`,banner:"You have changes saved on this device only. To publish them: tap “Download site copy” and upload the file to GitHub in place of index 2.html.",
   export:"Download site copy",reset:"Discard all changes",confirmReset:"This deletes all changes saved on this device and returns to the original version. Are you sure?",
   saved:"Saved.",required:"Fill in the required fields (*).",dup:"This contract number already exists.",exported:"File downloaded. Upload it to GitHub in place of index 2.html.",
-  imgs:"Contract images",addImgs:"Add images",notesHint:"One note per line",imgBusy:"Preparing images…",
+  imgs:"Contract images",addImgs:"Add photos or PDF",notesHint:"One note per line",imgBusy:"Preparing images…",
   f:{unit:"Unit * (e.g. محل 12)",plot:"Plot *",kind:"Unit type",area:"Area m²",reg:"Unit reg. no.",premise:"Premise no.",tenant:"Tenant *",tenant_en:"Tenant name in English",phone:"Phone",no:"Contract no. *",issue:"Issue date",start:"Start date *",end:"End date *",annual:"Annual rent *",value:"Contract value",n:"Payments *",method:"Payment method",registry:"Registry",notes:"Notes",cheque:"Attached cheque"}},
 title:"Tenancy contracts",gateP:"Sign in with your username and password.",user:"Email",pass:"Password",signin:"Sign in",badLogin:"Wrong email or password.",
  prev:"Previous",next:"Next",close:"Close",logout:"Sign out",langBtn:"العربية",
@@ -393,7 +397,8 @@ document.addEventListener("keydown",e=>{if(e.key==="Escape")$("#lb").classList.r
 document.addEventListener("toggle",async e=>{const g=e.target.querySelector&&e.target.querySelector(".gal");
   if(!e.target.open||!g||g.dataset.loaded)return;g.dataset.loaded="1";
   const c=DATA.find(x=>x.no===g.dataset.no),paths=(c&&c.imgs)||[];g.innerHTML='<span class="muted">…</span>';
-  try{const Ls=await signed(paths);g.innerHTML=Ls.map((u,k)=>`<button data-i="${k}"><img src="${u}" alt="${k+1}" loading="lazy"></button>`).join("");
+  try{const urls=await signed(paths);const Ls=[];
+  g.innerHTML=urls.map((u,k)=>{if(/\.pdf$/i.test(paths[k]))return `<a class="pdft gpdf" href="${u}" target="_blank" rel="noopener">📄<br>PDF</a>`;Ls.push(u);return `<button data-i="${Ls.length-1}"><img src="${u}" alt="${k+1}" loading="lazy"></button>`}).join("");
   g.querySelectorAll("button").forEach(b=>b.onclick=()=>{lbList=Ls;lbI=+b.dataset.i;lbShow();$("#lb").classList.add("on")})}catch(err){g.innerHTML=`<span class="err">${esc(err.message||err)}</span>`;delete g.dataset.loaded}
 },true);
 
@@ -533,7 +538,7 @@ async function boot(){$("#gate").hidden=true;$("#gate").style.display="none";$("
 document.addEventListener("visibilitychange",async()=>{if(document.visibilityState!=="visible"||!sb||$("#app").hidden||$("#edModal").classList.contains("on")||$("#imModal").classList.contains("on"))return;try{await loadData();refresh()}catch(e){}});
 
 /* ---------- contract editor ---------- */
-let edNo=null;
+let edNo=null,edPend=[];
 const FIELDS=["unit","plot","kind","area","reg","premise","tenant","tenant_en","phone","no","issue","start","end","annual","value","n","method","registry"];
 function fieldHtml(k,v){
   const F=L().ed.f[k],val=esc(v??"");
@@ -551,7 +556,9 @@ function fieldHtml(k,v){
 function openEditor(no){
   const E=L().ed;edNo=no;const c=no?DATA.find(x=>x.no===no):{plot:"47",kind:"محل",method:"شيكات",registry:"سجل الإيجارات",n:3};
   $("#edTitle").textContent=no?E.editT:E.addT;
-  $("#edForm").innerHTML=`<div class="fg">${FIELDS.map(k=>fieldHtml(k,c[k]==="—"?"":c[k])).join("")}</div>
+  edPend=[];
+  $("#edForm").innerHTML=`<div class="auto"><b>${E.autoT}</b><p>${E.autoP}</p><label class="addimg">${E.autoBtn}<input type="file" id="edAuto" accept="application/pdf,image/*" multiple hidden></label><p id="autoSt" class="muted"></p></div>
+   <div class="fg">${FIELDS.map(k=>fieldHtml(k,c[k]==="—"?"":c[k])).join("")}</div>
    <label class="full"><span>${E.f.notes} <small>(${E.notesHint})</small></span><textarea name="notes" rows="4">${esc((c.notes||[]).join("\n"))}</textarea></label>
    <label class="full"><span>${E.f.cheque}</span><textarea name="cheque" rows="3">${esc(c.cheque||"")}</textarea></label>
    <p id="edErr" class="err" role="alert"></p>
@@ -579,9 +586,11 @@ document.addEventListener("submit",async e=>{
   c.imgs=(old&&old.imgs)||[];
   const btn=e.target.querySelector("button[type=submit]");btn.disabled=true;btn.textContent=E.saving;
   try{await saveContract(c,old&&old.no)}catch(err){$("#edErr").textContent=E.saveErr+(err.message||err);btn.disabled=false;btn.textContent=E.save;return}
+  if(edPend.length){try{const added=await uploadFiles(c.no,edPend);c.imgs=[...(c.imgs||[]),...added];await saveContract(c)}catch(err){$("#edErr").textContent=E.saveErr+(err.message||err)}}
+  const hadPend=edPend.length;edPend=[];
   if(old){DATA[DATA.indexOf(old)]=c}else{DATA.unshift(c)}
-  closeModal("#edModal");refresh();toast(E.saved);
-  if(!old)openImgs(c.no);
+  closeModal("#edModal");resetGal(c.no);refresh();toast(E.saved);
+  if(!old&&!hadPend)openImgs(c.no);
 });
 
 /* ---------- images manager ---------- */
@@ -592,23 +601,21 @@ async function openImgs(no){imNo=no;const c=DATA.find(x=>x.no===no);$("#imTitle"
 async function drawImgs(){const c=DATA.find(x=>x.no===imNo);if(!c)return;const paths=c.imgs||[],box=$("#imThumbs");
   if(!paths.length){box.innerHTML=`<p class="muted">${L().ed.noImgs}</p>`;return}
   box.innerHTML='<span class="muted">…</span>';
-  try{const urls=await signed(paths);box.innerHTML=urls.map((u,k)=>`<div class="th big"><img src="${u}" alt="${k+1}" data-view="${k}"><button type="button" data-rmp="${k}" aria-label="x">×</button><span class="ix">${k+1}</span></div>`).join("")}
+  try{const urls=await signed(paths);box.innerHTML=urls.map((u,k)=>`<div class="th big">${isPdf(paths[k])?`<a class="pdft" href="${u}" target="_blank" rel="noopener">📄<br>PDF</a>`:`<img src="${u}" alt="${k+1}" data-view="${k}">`}<button type="button" data-rmp="${k}" aria-label="x">×</button><span class="ix">${k+1}</span></div>`).join("")}
   catch(err){box.innerHTML=`<p class="err">${esc(err.message||err)}</p>`}}
 function shrink(file){return new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>{const im=new Image();im.onload=()=>{const w=Math.min(1200,im.width),h=Math.round(im.height*w/im.width);const cv=document.createElement("canvas");cv.width=w;cv.height=h;const x=cv.getContext("2d");x.fillStyle="#fff";x.fillRect(0,0,w,h);x.drawImage(im,0,0,w,h);cv.toBlob(b=>b?res(b):rej(new Error("img")),"image/jpeg",0.78)};im.onerror=rej;im.src=r.result};r.onerror=rej;r.readAsDataURL(file)})}
 function resetGal(no){const g=document.querySelector(`.gal[data-no="${no}"]`);if(g){delete g.dataset.loaded;g.innerHTML=""}}
 document.addEventListener("change",async e=>{if(e.target.id!=="imFiles"||imBusy)return;const fs=[...e.target.files];e.target.value="";if(!fs.length)return;
   const c=DATA.find(x=>x.no===imNo);if(!c)return;imBusy=true;$("#imStatus").textContent=L().ed.uploading;
   const added=[];
-  try{for(const f of fs){const blob=await shrink(f);const path=`${c.no}/${Date.now()}_${Math.random().toString(36).slice(2,7)}.jpg`;
-      const {error}=await sb.storage.from(BUCKET).upload(path,blob,{contentType:"image/jpeg",upsert:false});if(error)throw error;added.push(path)}
-  }catch(err){$("#imStatus").textContent=L().ed.saveErr+(err.message||err)}
+  try{added.push(...await uploadFiles(c.no,fs))}catch(err){$("#imStatus").textContent=L().ed.saveErr+(err.message||err)}
   if(added.length){c.imgs=[...(c.imgs||[]),...added];try{await saveContract(c);$("#imStatus").textContent="";toast(L().ed.saved)}catch(err){$("#imStatus").textContent=L().ed.saveErr+(err.message||err)}}
   imBusy=false;await drawImgs();resetGal(c.no);render();});
 document.addEventListener("click",async e=>{
   const t=e.target.closest("[data-edit],[data-del],[data-imgs],[data-rmp],[data-view],#edCancel,#addBtn,#imDone");if(!t)return;
   if(t.dataset.edit)openEditor(t.dataset.edit);
   else if(t.dataset.imgs)openImgs(t.dataset.imgs);
-  else if(t.dataset.view!==undefined){const c=DATA.find(x=>x.no===imNo);const urls=await signed(c.imgs||[]);lbList=urls;lbI=+t.dataset.view;lbShow();$("#lb").classList.add("on")}
+  else if(t.dataset.view!==undefined){const c=DATA.find(x=>x.no===imNo);const ps=c.imgs||[];const urls=await signed(ps);const imgIdx=ps.map((p,i)=>i).filter(i=>!isPdf(ps[i]));lbList=imgIdx.map(i=>urls[i]);lbI=imgIdx.indexOf(+t.dataset.view);lbShow();$("#lb").classList.add("on")}
   else if(t.dataset.rmp!==undefined){if(imBusy||!confirm(L().ed.delImg))return;const c=DATA.find(x=>x.no===imNo);const k=+t.dataset.rmp,p=c.imgs[k];imBusy=true;
     try{await sb.storage.from(BUCKET).remove([p]);c.imgs=c.imgs.filter((_,i)=>i!==k);await saveContract(c);toast(L().ed.saved)}catch(err){$("#imStatus").textContent=L().ed.saveErr+(err.message||err)}
     imBusy=false;await drawImgs();resetGal(c.no);render()}
@@ -618,6 +625,96 @@ document.addEventListener("click",async e=>{
   else if(t.id==="imDone")closeModal("#imModal");
   else if(t.id==="addBtn")openEditor(null);
 });
+
+const isPdf=p=>/\.pdf$/i.test(p);
+document.addEventListener("change",async e=>{if(e.target.id!=="edAuto")return;const fs=[...e.target.files];e.target.value="";if(!fs.length)return;
+  const st=$("#autoSt"),E=L().ed;edPend.push(...fs);
+  try{const R=await readContractFiles(fs,m=>st.textContent=m);const n=applyAuto($("#edForm"),R);st.textContent=(n?E.autoDone(n):E.autoNone)+" · "+E.pend(edPend.length)}
+  catch(err){st.textContent=E.autoNone+" · "+E.pend(edPend.length)}});
+async function uploadFiles(no,files){const out=[];
+  for(const f of files){const pdf=/pdf$/i.test(f.type)||/\.pdf$/i.test(f.name);const blob=pdf?f:await shrink(f);
+    const path=`${no}/${Date.now()}_${Math.random().toString(36).slice(2,7)}.${pdf?"pdf":"jpg"}`;
+    const {error}=await sb.storage.from(BUCKET).upload(path,blob,{contentType:pdf?"application/pdf":"image/jpeg",upsert:false});if(error)throw error;out.push(path)}
+  return out}
+
+/* ---------- auto-read contract (PDF text / image OCR) ---------- */
+const PDFJS_URL="https://cdn.jsdelivr.net/npm/pdfjs-dist@4.10.38/legacy/build/pdf.min.mjs";
+const PDFJS_WORKER="https://cdn.jsdelivr.net/npm/pdfjs-dist@4.10.38/legacy/build/pdf.worker.min.mjs";
+const TESS_URL="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js";
+let pdfjsP=null;
+function loadPdfjs(){return pdfjsP||(pdfjsP=import(PDFJS_URL).then(m=>{m.GlobalWorkerOptions.workerSrc=PDFJS_WORKER;return m}))}
+function loadScript(src){return new Promise((res,rej)=>{const s=document.createElement("script");s.src=src;s.onload=res;s.onerror=()=>rej(new Error("load "+src));document.head.appendChild(s)})}
+const AR=/[\u0600-\u06FF\uFB50-\uFDFF\uFE70-\uFEFF]/;
+const nz=s=>String(s).normalize("NFKC");
+async function pdfRows(file){
+  const pdfjs=await loadPdfjs();const doc=await pdfjs.getDocument({data:new Uint8Array(await file.arrayBuffer())}).promise;const rows=[];
+  for(let p=1;p<=Math.min(doc.numPages,3);p++){const pg=await doc.getPage(p);const tc=await pg.getTextContent();const rs=[];
+    for(const it of tc.items){if(!it.str||!it.str.trim())continue;const y=it.transform[5],x=it.transform[4];let r=rs.find(r=>Math.abs(r.y-y)<3);if(!r){r={y,items:[]};rs.push(r)}r.items.push({x,s:it.str.trim()})}
+    rs.sort((a,b)=>b.y-a.y);rs.forEach(r=>{r.items.sort((a,b)=>a.x-b.x);rows.push(r.items.map(i=>i.s))})}
+  return rows}
+async function ocrRows(file){
+  if(!window.Tesseract)await loadScript(TESS_URL);
+  const {data}=await window.Tesseract.recognize(file,"eng");
+  return data.text.split("\n").map(l=>l.trim()).filter(Boolean).map(l=>l.split(/\s{2,}|\s*\|\s*/).filter(Boolean))}
+function parseContract(rows){
+  const R={},L=rows.map(r=>r.join(" | "));
+  const after=(lab,re)=>{for(const l of L){const i=l.indexOf(lab);if(i>=0){const m=l.slice(i+lab.length).match(re);if(m)return m[1]}}};
+  const num=s=>s==null?undefined:Number(String(s).replace(/,/g,""));
+  R.no=after("Contract No",/(\d{9,15})/);
+  R.issue=after("Issue Date",/(\d{4}-\d{2}-\d{2})/);
+  R.start=after("Start Date",/(\d{4}-\d{2}-\d{2})/);
+  R.end=after("End Date",/(\d{4}-\d{2}-\d{2})/);
+  R.annual=num(after("Annual Rent",/([\d,]+(?:\.\d+)?)/));
+  R.value=num(after("Contract Value",/([\d,]+(?:\.\d+)?)/));
+  R.n=num(after("Number of Payments",/(\d+)/));
+  const pm=after("Payment Method",/([A-Za-z][A-Za-z ]+)/);
+  if(pm)R.method=/cash/i.test(pm)&&/cheque/i.test(pm)?"نقدي وشيكات":/cheque/i.test(pm)?"شيكات":/cash/i.test(pm)?"نقدي":undefined;
+  if(L.some(l=>/Land Registry/i.test(l)))R.registry="السجل العقاري";else if(L.some(l=>/Rental Registry/i.test(l)))R.registry="سجل الإيجارات";
+  R.plot=after("Plot No",/(\d+)/);
+  const prp=L.join(" ").match(/PRP\d+/);if(prp)R.prp=prp[0];
+  // tenant section
+  const s=L.findIndex(l=>/TENANT DETAILS/i.test(l));
+  if(s>=0){let e=L.findIndex((l,i)=>i>s&&/PROPERTY DETAILS/i.test(l));if(e<0)e=Math.min(L.length,s+14);
+    const T=rows.slice(s+1,e),toks=T.flat();
+    const ei=toks.findIndex(t=>t.includes("@"));
+    if(ei>=0){let em=toks[ei];if(/[.@]$/.test(em)||!/\.[a-z]{2,}$/i.test(em)){const nx=toks.slice(ei+1).find(t=>/^[a-z.]{1,10}$/i.test(t));if(nx)em+=nx}R.email=em.replace(/\s/g,"")}
+    const ph=toks.map(t=>t.replace(/\+/g,"").trim()).find(t=>/^(971\d{9}|05\d{8})$/.test(t));if(ph)R.phone=ph;
+    const lic=toks.find(t=>/^(CN|TN)-\d+$/.test(t));if(lic)R.license=lic;
+    const k=T.findIndex(r=>r.join(" ").match(/Reserved Trade Name/i));
+    const part=k>=0?T.slice(k+1):T;
+    const LBL=/^(Email|Mobile No\.?|License No\.?|Company Name|Full Name|Emirates ID No\.?|Nationality|Reserved Trade (Name|No\.?)|TENANT DETAILS|1\.)$/i;
+    const en=part.flat().filter(t=>/[A-Z]/.test(t)&&t===t.toUpperCase()&&!AR.test(t)&&!LBL.test(t)&&!t.includes("@")&&!/^(CN|TN)-/.test(t)&&!/^\+?\d[\d\s]*\+?$/.test(t)&&!/^(COM|C)$/i.test(t));
+    if(en.length)R.tenant_en=en.join(" ").replace(/\s+/g," ").replace(/\s*-\s*$/,"").trim();
+    const HDR=/(البريد|الهاتف|الرخصة|اسم|الشركة|تفاصيل|المستأجر|الهوية|الجنسية|الكامل|التجاري|المحجوز|الطرف)/;
+    const arRows=part.filter(r=>r.length&&r.every(t=>AR.test(t)||/^[\s.\-()]+$/.test(t))).map(r=>nz(r.slice().reverse().join(" "))).filter(t=>!HDR.test(t)&&t.replace(/[^\u0600-\u06FF]/g,"").length>3);
+    if(arRows.length){let a=arRows[k>=0?arRows.length-1:0];a=a.replace(/\s*\.\s*/g,".").replace(/\s*-\s*/g," - ").replace(/\s+/g," ").trim();R.tenant=a}
+  }
+  // unit row
+  const ui=rows.findIndex(r=>r.some(t=>/^UNT\d+$/.test(t)));
+  if(ui>=0){const r=rows[ui],k=r.findIndex(t=>/^UNT\d+$/.test(t));R.reg=r[k];
+    const before=r.slice(0,k).filter(t=>/^\d+$/.test(t));const pr=before.find(t=>t.length>=8);if(pr)R.premise=pr;
+    const ar=before.filter(t=>t!==pr);if(ar.length)R.area=ar[ar.length-1];
+    const u=nz(r.slice(k+1).reverse().join(" ")).replace(/رقم/g,"").replace(/\s+/g," ").trim();if(u&&AR.test(u))R.unit=u;
+    const near=[rows[ui-1],r,rows[ui+1]].filter(Boolean).flat().join(" ");
+    R.kind=/WORKSHOP/.test(near)?"ورشة":/OFFICE/.test(near)?"مكتب":/STORE|WAREHOUSE/.test(near)?"مستودع":/SHOP/.test(near)?"محل":undefined;
+  }else{
+    const m=L.join(" ").match(/UNT\d{6,}/);if(m)R.reg=m[0];
+  }
+  Object.keys(R).forEach(k=>{if(R[k]===undefined||R[k]===""||Number.isNaN(R[k]))delete R[k]});
+  return R;
+}
+async function readContractFiles(files,status){
+  const pdfs=files.filter(f=>/pdf$/i.test(f.type)||/\.pdf$/i.test(f.name)),imgs=files.filter(f=>/^image\//.test(f.type));
+  let R={};
+  for(const f of pdfs){status(L().ed.readingPdf);try{const r=parseContract(await pdfRows(f));R={...r,...R}}catch(e){console.warn(e)}}
+  if(Object.keys(R).length<6&&imgs.length){for(const f of imgs){status(L().ed.readingImg);try{const r=parseContract(await ocrRows(f));for(const k in r)if(!(k in R))R[k]=r[k]}catch(e){console.warn(e)}}}
+  return R}
+function applyAuto(form,R){
+  let n=0;const set=(name,val)=>{const el=form.elements[name];if(!el||val==null||val==="")return;val=String(val);
+    if(el.tagName==="SELECT"&&![...el.options].some(o=>o.value===val)){const o=document.createElement("option");o.textContent=val;el.appendChild(o)}
+    if(el.value!==val){el.value=val;el.classList.add("filled");n++}};
+  ["no","issue","start","end","annual","value","n","method","registry","plot","reg","premise","area","kind","unit","tenant","tenant_en","phone"].forEach(k=>set(k,R[k]));
+  return n}
 
 </script>
 </body>
