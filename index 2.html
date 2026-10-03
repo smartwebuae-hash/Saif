@@ -150,6 +150,41 @@ dd .call{margin-inline-start:8px;padding:3px 10px;font-size:.82rem}
 .err{color:#B42318;margin:10px 0 0;font-size:.88rem;min-height:1em}
 .edbtns{display:flex;gap:8px;margin-top:10px}
 .edbtns .pri{padding:8px 22px}
+
+.mdl{position:fixed;inset:0;background:rgba(15,23,35,.55);z-index:75;display:none;overflow:auto;padding:16px}.mdl.on{display:block}
+.mh{display:flex;justify-content:space-between;align-items:center}.mh h2{margin:0}
+.tools{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0 10px}
+.tb{border:1px solid var(--ink);background:#fff;color:var(--ink);border-radius:10px;padding:8px 12px;font:inherit;font-weight:700;font-size:.9rem;cursor:pointer}
+.dcards{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.dc{border:1px solid var(--line);border-radius:12px;padding:10px;text-align:start;background:#fff;font:inherit;cursor:pointer;line-height:1.3}
+.dc small{display:block;font-size:.75rem;color:var(--mute)}.dc b{font-size:1.15rem}
+.dc.g b{color:#1F7A4D}.dc.a b{color:#B54708}.dc.r b{color:#C62828}
+@media(max-width:420px){.dc b{font-size:1rem}}
+.paybox{margin-top:12px;border:1px solid var(--line);border-radius:10px;padding:10px}
+.payh{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:6px}
+.ptab{width:100%;border-collapse:collapse;font-size:.9rem}.ptab td{border-top:1px solid #EDF0F3;padding:6px 4px;vertical-align:middle}
+.ptab tr.nxr td{background:#FDECEA}.ptab .pa{white-space:nowrap;text-align:end}
+.n{direction:ltr;unicode-bidi:isolate;white-space:nowrap}.small{font-size:.8rem}
+.ib{border:1px solid var(--line);background:#fff;border-radius:7px;width:32px;height:30px;cursor:pointer;margin-inline-start:4px}
+.sc{display:inline-block;border-radius:6px;padding:1px 8px;font-size:.78rem;font-weight:700;white-space:nowrap}
+.sc-pending{background:#FEF4E6;color:#B54708}.sc-received,.sc-deposited,.sc-cash{background:#E3F4EA;color:#1F7A4D}.sc-bounced{background:#C62828;color:#fff}.sc-assumed{background:#F1F3F6;color:#6B7280}
+.pd.paid{background:#E3F4EA;border-color:#9FD4B6;color:#1F7A4D}.pd.bnc{background:#fff;border:2px solid #C62828;color:#C62828}.pd.late{border:2px solid #C62828;color:#C62828}
+.dangerb{color:#B42318!important;border-color:#F3C4C0!important}
+.dsum{margin:10px 0;font-size:.95rem}.ditem{display:grid;grid-template-columns:96px 1fr;gap:10px;padding:10px 0;border-top:1px solid var(--line)}
+.dd{font-weight:700;color:#C62828}.dact{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px;align-items:center}.dact .call{margin:0}
+.rl{display:flex;flex-direction:column;gap:4px;font-size:.85rem;color:var(--mute)}.rl select{font:inherit;padding:8px;border:1px solid var(--line);border-radius:8px}
+#printArea{display:none}
+@media print{
+ @page{size:A4 landscape;margin:10mm}
+ body.printing>*:not(#printArea){display:none!important}
+ body.printing #printArea{display:block!important;font-size:9.5px;color:#1B2A41}
+ #printArea h1{font-size:18px;margin:0 0 2px;color:#B42318}#printArea .rsub{margin:0 0 8px;color:#5B6878;font-size:9px}
+ .rt{width:100%;border-collapse:collapse;margin-bottom:10px;break-inside:auto}.rt th,.rt td{border:1px solid #C9D1DB;padding:3px 4px;text-align:start}
+ .rt thead tr:last-child th{background:#1B2A41;color:#fff}.rt .rg th{background:#C62828;color:#fff;font-size:11px}
+ .rt .rs td{background:#FDECEC;color:#B42318;font-weight:700}.rp{font-weight:700}.rp-exp,.rp-closed{color:#B42318}.rp-soon{color:#B54708}.rp-ok{color:#1F7A4D}
+ .rgrand{font-size:12px;color:#B42318}
+ *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
 </style>
 </head>
 <body>
@@ -171,6 +206,10 @@ dd .call{margin-inline-start:8px;padding:3px 10px;font-size:.82rem}
 <div id="lb" role="dialog" aria-modal="true"><div class="bar"><button id="lbPrev" data-t="prev"></button><span id="lbCount"></span><button id="lbNext" data-t="next"></button><button id="lbClose" data-t="close"></button></div><div class="view"><img id="lbImg" alt=""></div></div>
 <div id="toast" role="status"></div>
 <div id="imModal" role="dialog" aria-modal="true"><div class="edbox"><h2 id="imTitle"></h2><div id="imThumbs" class="thumbs"></div><p id="imStatus" class="err"></p><div class="edbtns"><label class="addimg" id="imAddLbl">إضافة صور<input type="file" id="imFiles" accept="image/*,application/pdf" multiple hidden></label><button type="button" id="imDone" class="pri">تم</button></div></div></div>
+<div id="pyModal" class="mdl" role="dialog" aria-modal="true"><div class="edbox"><h2 id="pyTitle"></h2><form id="pyForm" autocomplete="off"></form></div></div>
+<div id="dueModal" class="mdl" role="dialog" aria-modal="true"><div class="edbox"><div class="mh"><h2 id="dueTitle"></h2><button type="button" id="dueClose" class="edb">✕</button></div><div id="dueTabs" class="chips"></div><div id="dueBody"></div></div></div>
+<div id="repModal" class="mdl" role="dialog" aria-modal="true"><div class="edbox"><h2 id="repTitle"></h2><div id="repBody"></div></div></div>
+<div id="printArea"></div>
 <div id="edModal" role="dialog" aria-modal="true"><div class="edbox"><h2 id="edTitle"></h2><form id="edForm" autocomplete="off"></form></div></div>
 <div id="app" class="wrap" hidden>
   <header>
@@ -180,6 +219,7 @@ dd .call{margin-inline-start:8px;padding:3px 10px;font-size:.82rem}
     <div class="totals" id="totals"></div>
   </header>
 
+  <div id="dash"></div>
   <p id="emptyMsg" class="dirty" hidden></p>
   <div class="due">
     <h2 data-t="dueH"></h2>
@@ -310,18 +350,27 @@ const stText=k=>({closed:L().stClosed,exp:L().stExp,soon:L().stSoon,ok:L().stOk}
 DATA.forEach(c=>c.st=status(c));
 
 function row(k,v){const e=(v===undefined||v===null||v===""||v==="—"||v==="غير متوفر");return `<dt>${k}</dt><dd${e?' class="na"':''}>${e?L().na:v}</dd>`}
-function schedISO(c){
-  if(Array.isArray(c.pays)&&c.pays.length)return c.pays.slice().sort();
-  const s=d(c.start),e=d(c.end),span=e-s,out=[];
-  for(let i=0;i<c.n;i++){out.push(iso(new Date(s.getTime()+span*i/c.n)))}
-  return out;
-}
+const PAID=new Set(["received","deposited","cash"]);
+function eqAmounts(c){const n=Math.max(1,+c.n||1),v=Number(c.value)||0,b=Math.round(v/n);return Array.from({length:n},(_,i)=>i<n-1?b:v-b*(n-1))}
+function baseDates(c){if(Array.isArray(c.pays)&&c.pays.length)return c.pays.slice().sort();
+  const s=d(c.start),e=d(c.end),span=e-s,n=Math.max(1,+c.n||1),out=[];for(let i=0;i<n;i++)out.push(iso(new Date(s.getTime()+span*i/n)));return out}
+function isEst(c){return !(Array.isArray(c.payments)&&c.payments.length)}
+function payments(c){
+  if(!isEst(c))return c.payments.slice().sort((a,b)=>a.date<b.date?-1:1);
+  const t=iso(today),ds=baseDates(c),am=eqAmounts(c);
+  return ds.map((date,i)=>({date,amount:am[i]??am[am.length-1],status:date<t?"assumed":"pending",est:true}))}
+function ensurePayments(c){if(isEst(c))c.payments=payments(c).map(p=>p.status==="assumed"?{date:p.date,amount:p.amount,status:"received",auto:true}:{date:p.date,amount:p.amount,status:"pending"});c.payments.sort((a,b)=>a.date<b.date?-1:1);return c.payments}
+function schedISO(c){return payments(c).map(p=>p.date)}
 function scheduleArr(c){return schedISO(c).map(dmy)}
-function nextPay(c){const t=iso(today);const all=schedISO(c);const i=all.findIndex(x=>x>=t);return i<0?null:{i,date:all[i],days:Math.round((d(all[i])-today)/DAY)}}
+function nextPay(c){const ps=payments(c);const i=ps.findIndex(p=>p.status==="pending"||p.status==="bounced");if(i<0)return null;const p=ps[i];return {i,date:p.date,amount:p.amount,status:p.status,days:Math.round((d(p.date)-today)/DAY)}}
 function paysHtml(c){
-  const all=schedISO(c),np=nextPay(c),t=iso(today),est=!(Array.isArray(c.pays)&&c.pays.length);
-  return `<span class="pays"><span class="ph">${L().paysT}${est?` <small>(${L().estW})</small>`:""}:</span>${all.map((x,i)=>`<span class="pd${np&&i===np.i?" nx":x<t?" past":""}">${dmy(x)}</span>`).join("")}</span>`}
-function npBadge(c){const np=nextPay(c);if(!np)return "";return `<span class="np">● ${L().nextPay}: ${dmy(np.date)} · ${np.days===0?L().todayW:L().inDays(np.days)}</span>`}
+  const ps=payments(c),np=nextPay(c),est=isEst(c),t=iso(today);
+  return `<span class="pays"><span class="ph">${L().paysT}${est?` <small>(${L().estW})</small>`:""}:</span>${ps.map((p,i)=>{
+    const cls=np&&i===np.i?" nx":p.status==="bounced"?" bnc":PAID.has(p.status)?" paid":p.status==="assumed"?" past":(p.date<t?" late":"");
+    return `<span class="pd${cls}">${PAID.has(p.status)?"✓ ":p.status==="bounced"?"✗ ":""}${dmy(p.date)}</span>`}).join("")}</span>`}
+function npBadge(c){const np=nextPay(c);if(!np)return "";const X=LX();
+  const when=np.days<0?X.lateBy(-np.days):np.days===0?L().todayW:L().inDays(np.days);
+  return `<span class="np">● ${np.status==="bounced"?X.bouncedW:L().nextPay}: ${dmy(np.date)} · ${L().aed(fmt(np.amount))} · ${when}</span>`}
 function card(c){
   const st=c.st, per=Math.round(c.value/c.n), R=L().r;
   const phone=telOf(c.phone)?`${c.phone} ${callBtn(c.phone)} ${waChatBtn(c.phone)}`:c.phone;
@@ -343,10 +392,10 @@ function card(c){
   ${row(R.annual,L().aed(fmt(c.annual)))}${row(R.value,L().aed(fmt(c.value)))}
   ${row(R.n,c.n+" ("+methodOf(c)+")")}${row(R.per,L().aed(fmt(per)))}${row(R.sched,scheduleArr(c).join(lang==="ar"?"، ":", "))}
   ${row(R.close,dmy(iso(st.close)))}${row(R.registry,regOf(c))}
-  </dl><div class="edrow"><button type="button" class="edb" data-edit="${c.no}">✎ ${L().ed.edit}</button><button type="button" class="edb" data-imgs="${c.no}">🖼 ${L().ed.imgsBtn} (${(c.imgs||[]).length})</button><button type="button" class="edb del" data-del="${c.no}">🗑 ${L().ed.del}</button></div>${chq}${notes}${imgs?`<div class="galh">${L().imgs(imgs)}</div><div class="gal" data-no="${c.no}"></div>`:""}</div></details>`;
+  </dl><div class="edrow"><button type="button" class="edb" data-edit="${c.no}">✎ ${L().ed.edit}</button><button type="button" class="edb" data-imgs="${c.no}">🖼 ${L().ed.imgsBtn} (${(c.imgs||[]).length})</button><button type="button" class="edb" data-renew="${c.no}">🔁 ${LX().renew}</button><button type="button" class="edb del" data-del="${c.no}">🗑 ${L().ed.del}</button></div>${payTable(c)}${chq}${notes}${imgs?`<div class="galh">${L().imgs(imgs)}</div><div class="gal" data-no="${c.no}"></div>`:""}</div></details>`;
 }
 function render(){
-  const q=$("#q").value.trim().toLowerCase(), f=document.querySelector(".chip[aria-pressed=true]").dataset.f;
+  const q=$("#q").value.trim().toLowerCase(), f=document.querySelector(".controls .chip[aria-pressed=true]").dataset.f;
   const match=c=>{
     const hay=[c.unit,c.unit_en||"",unitOf(c),c.tenant,c.tenant_en||"",c.no,c.reg,c.phone].join(" ").toLowerCase();
     if(q && !hay.includes(q)) return false;
@@ -365,6 +414,7 @@ function render(){
 function header(){
   banner();
   const exp=DATA.filter(c=>c.st.k==="exp"||c.st.k==="closed").length, soon=DATA.filter(c=>c.st.k==="soon").length;
+  dash();
   $("#totals").innerHTML=`<span>${L().contracts(DATA.length)}</span><span>${L().annualTot(fmt(DATA.reduce((a,c)=>a+c.annual,0)))}</span><span style="color:var(--red)">${L().expN(exp)}</span><span style="color:var(--amber)">${L().soonN(soon)}</span>`;
   const due=DATA.filter(c=>c.st.k!=="ok").sort((a,b)=>a.st.close-b.st.close);
   $("#dueList").innerHTML=due.length?due.map(c=>{
@@ -399,7 +449,7 @@ $("#loginForm").addEventListener("submit",async e=>{e.preventDefault();$("#err")
   boot();});
 $("#logout").onclick=async()=>{try{await sb.auth.signOut()}catch(e){}location.reload()};
 $("#q").addEventListener("input",render);
-document.querySelectorAll(".chip").forEach(b=>b.onclick=()=>{document.querySelectorAll(".chip").forEach(x=>x.setAttribute("aria-pressed","false"));b.setAttribute("aria-pressed","true");render()});
+document.querySelectorAll(".controls .chip").forEach(b=>b.onclick=()=>{document.querySelectorAll(".controls .chip").forEach(x=>x.setAttribute("aria-pressed","false"));b.setAttribute("aria-pressed","true");render()});
 
 /* ---------- lightbox ---------- */
 let lbList=[],lbI=0;
@@ -469,7 +519,7 @@ function drawSummary(c){
 function jpegToPdf(bytes,wPx,hPx){
   const enc=new TextEncoder(),parts=[],offs=[];let len=0;
   const push=b=>{const u=typeof b==="string"?enc.encode(b):b;parts.push(u);len+=u.length};
-  const PW=595.28,PH=841.89,content=`q ${PW} 0 0 ${PH} 0 0 cm /Im0 Do Q`;
+  const PW=595.28,PH=+(595.28*hPx/wPx).toFixed(2),content=`q ${PW} 0 0 ${PH} 0 0 cm /Im0 Do Q`;
   push("%PDF-1.4\n%\xE2\xE3\xCF\xD3\n");
   const obj=(n,s)=>{offs[n]=len;push(`${n} 0 obj\n${s}\nendobj\n`)};
   obj(1,"<< /Type /Catalog /Pages 2 0 R >>");
@@ -549,7 +599,7 @@ async function boot(){$("#gate").hidden=true;$("#gate").style.display="none";$("
   try{await loadData()}catch(err){$("#list").innerHTML=`<p class="noresult err">${esc(err.message||err)}</p>`;return}
   refresh()}
 (async()=>{if(SB_KEY){$("#keyRow").hidden=true;mkClient(SB_KEY);try{const {data}=await sb.auth.getSession();if(data&&data.session)boot()}catch(e){}}})();
-document.addEventListener("visibilitychange",async()=>{if(document.visibilityState!=="visible"||!sb||$("#app").hidden||$("#edModal").classList.contains("on")||$("#imModal").classList.contains("on"))return;try{await loadData();refresh()}catch(e){}});
+document.addEventListener("visibilitychange",async()=>{if(document.visibilityState!=="visible"||!sb||$("#app").hidden||$("#edModal").classList.contains("on")||$("#imModal").classList.contains("on")||$("#pyModal").classList.contains("on")||$("#dueModal").classList.contains("on"))return;try{await loadData();refresh()}catch(e){}});
 
 /* ---------- contract editor ---------- */
 let edNo=null,edPend=[];
@@ -567,13 +617,14 @@ function fieldHtml(k,v){
   else inp=`<input name="${k}" value="${val}"${["phone","no","reg","premise","tenant_en"].includes(k)?' dir="ltr"':""}>`;
   return `<label><span>${F}</span>${inp}</label>`;
 }
-function openEditor(no){
-  const E=L().ed;edNo=no;const c=no?DATA.find(x=>x.no===no):{plot:"47",kind:"محل",method:"شيكات",registry:"سجل الإيجارات",n:3};
-  $("#edTitle").textContent=no?E.editT:E.addT;
+let edMode="edit";
+function openEditor(no,mode){
+  const E=L().ed;edNo=no;edMode=mode||"edit";let c=no?DATA.find(x=>x.no===no):{plot:"47",kind:"محل",method:"شيكات",registry:"سجل الإيجارات",n:3};
+  if(edMode==="renew"&&c){const s0=d(c.start),e0=d(c.end),ns=addDays(e0,1),yrs=Math.max(1,Math.round((e0-s0)/(365.25*DAY))),ne=new Date(e0);ne.setFullYear(e0.getFullYear()+yrs);c={...c,start:iso(ns),end:iso(ne),issue:iso(today)}}
+  $("#edTitle").textContent=edMode==="renew"?LX().renewT:no?E.editT:E.addT;
   edPend=[];
   $("#edForm").innerHTML=`<div class="auto"><b>${E.autoT}</b><p>${E.autoP}</p><label class="addimg">${E.autoBtn}<input type="file" id="edAuto" accept="application/pdf,image/*" multiple hidden></label><p id="autoSt" class="muted"></p></div>
    <div class="fg">${FIELDS.map(k=>fieldHtml(k,c[k]==="—"?"":c[k])).join("")}</div>
-   <label class="full"><span>${E.paysF} <small>(${E.paysHint})</small></span><textarea name="pays" rows="3" dir="ltr">${esc((c.pays||[]).map(dmy).join("\n"))}</textarea></label>
    <label class="full"><span>${E.f.notes} <small>(${E.notesHint})</small></span><textarea name="notes" rows="4">${esc((c.notes||[]).join("\n"))}</textarea></label>
    <label class="full"><span>${E.f.cheque}</span><textarea name="cheque" rows="3">${esc(c.cheque||"")}</textarea></label>
    <p id="edErr" class="err" role="alert"></p>
@@ -598,9 +649,7 @@ document.addEventListener("submit",async e=>{
   if(!old||JSON.stringify(notes)!==JSON.stringify(old.notes||[])){c.notes=notes;delete c.notes_en}
   if(!old||cheque!==(old.cheque||null)){c.cheque=cheque;delete c.cheque_en}
   if(old&&old.unit!==c.unit)delete c.unit_en;
-  const pays=g("pays").split(/[\n,،]+/).map(x=>x.trim()).filter(Boolean).map(x=>{let m=x.match(/^(\d{1,2})[\/\-.](\d{1,2})[\/\-.](\d{4})$/);if(m)return `${m[3]}-${m[2].padStart(2,"0")}-${m[1].padStart(2,"0")}`;m=x.match(/^(\d{4})-(\d{1,2})-(\d{1,2})$/);if(m)return `${m[1]}-${m[2].padStart(2,"0")}-${m[3].padStart(2,"0")}`;return null});
-  if(pays.some(x=>!x)){$("#edErr").textContent=E.payErr;return}
-  if(pays.length)c.pays=pays.sort();else delete c.pays;
+  if(edMode==="renew"&&old){c.history=[...(old.history||[]),{start:old.start,end:old.end,issue:old.issue,annual:old.annual,value:old.value,n:old.n,method:old.method,payments:old.payments||null}];delete c.payments;delete c.pays}
   c.imgs=(old&&old.imgs)||[];
   const btn=e.target.querySelector("button[type=submit]");btn.disabled=true;btn.textContent=E.saving;
   try{await saveContract(c,old&&old.no)}catch(err){$("#edErr").textContent=E.saveErr+(err.message||err);btn.disabled=false;btn.textContent=E.save;return}
@@ -733,6 +782,163 @@ function applyAuto(form,R){
     if(el.value!==val){el.value=val;el.classList.add("filled");n++}};
   ["no","issue","start","end","annual","value","n","method","registry","plot","reg","premise","area","kind","unit","tenant","tenant_en","phone"].forEach(k=>set(k,R[k]));
   return n}
+
+/* ================= payments, due list, calendar, reports, receipts ================= */
+const X={
+ar:{renew:"تجديد",renewT:"تجديد العقد (السنة الجديدة)",lateBy:n=>`متأخرة ${n} يوم`,bouncedW:"شيك مرتجع",
+ payH:"الدفعات والشيكات",addPay:"+ إضافة دفعة",estNote:"المواعيد تقديرية. عدّل أي دفعة لتسجيل الشيك الفعلي.",
+ st:{pending:"مستحقة",received:"مستلَم",deposited:"مودَع",cash:"نقدي",bounced:"مرتجع",assumed:"سابقة"},
+ pf:{date:"تاريخ الاستحقاق",amount:"المبلغ (درهم)",status:"الحالة",chq:"رقم الشيك",bank:"البنك",note:"ملاحظة"},
+ payT:"تعديل الدفعة",newPayT:"دفعة جديدة",delPay:"حذف الدفعة",confirmDelPay:"حذف هذه الدفعة؟",rcpt:"إيصال",
+ d:{coll:y=>`المحصّل ${y}`,late:"متأخر / مرتجع",due30:"مستحق خلال 30 يوم",bnc:"شيكات مرتجعة"},
+ tools:{due:"📅 شيكات الشهر",rep:"📄 تقارير",cal:"🗓 إضافة للتقويم"},
+ dueT:"الشيكات المستحقة",tab:{late:"متأخرة",d30:"30 يوم",d90:"90 يوم"},total:"المجموع",none:"لا توجد دفعات في هذه الفترة.",
+ mkDep:"✓ أودِع",mkBnc:"✗ مرتجع",
+ repT:"التقارير",repPlot:"القسيمة",repAll:"كل القسائم",repGo:"عرض وطباعة / حفظ PDF",repHint:"في شاشة الطباعة اختر «مشاركة» ثم «حفظ في الملفات» لحفظه PDF.",
+ repCols:["#","الوحدة","المستأجر","الهاتف","رقم العقد","البداية","النهاية","الإيجار السنوي","الدفعات","الدفعة القادمة","الحالة"],repSum:n=>`المجموع — ${n} وحدات`,repTitle:p=>`وحدات ${p} — النود، العين`,repDate:d=>`الحالة بتاريخ ${d}`,
+ calDone:"تم تجهيز ملف التقويم. اضغط «إضافة الكل» لإضافة المواعيد لتقويم الجوال.",calPay:"💰 دفعة",calEnd:"📌 نهاية عقد",calReg:"⚠️ آخر موعد لتسجيل تجديد",
+ r:{t:"إيصال استلام",no:"رقم الإيصال",date:"التاريخ",from:"استلمنا من",amount:"مبلغ وقدره",for:"وذلك عن",forV:(u,no,dt)=>`إيجار ${u} — عقد رقم ${no} — دفعة مستحقة بتاريخ ${dt}`,method:"طريقة الدفع",cash:"نقداً",chq:(n,b)=>`شيك رقم ${n||"—"}${b?" — "+b:""}`,sig:"توقيع المستلم",tsig:"توقيع المستأجر",mark:"تسجيل الدفعة كمستلَمة؟"},
+ saved:"تم الحفظ."},
+en:{renew:"Renew",renewT:"Renew contract (new year)",lateBy:n=>`${n} days late`,bouncedW:"Bounced cheque",
+ payH:"Payments & cheques",addPay:"+ Add payment",estNote:"Dates are estimated. Edit any payment to record the actual cheque.",
+ st:{pending:"Due",received:"Received",deposited:"Deposited",cash:"Cash",bounced:"Bounced",assumed:"Past"},
+ pf:{date:"Due date",amount:"Amount (AED)",status:"Status",chq:"Cheque no.",bank:"Bank",note:"Note"},
+ payT:"Edit payment",newPayT:"New payment",delPay:"Delete payment",confirmDelPay:"Delete this payment?",rcpt:"Receipt",
+ d:{coll:y=>`Collected ${y}`,late:"Late / bounced",due30:"Due in 30 days",bnc:"Bounced cheques"},
+ tools:{due:"📅 This month's cheques",rep:"📄 Reports",cal:"🗓 Add to calendar"},
+ dueT:"Cheques due",tab:{late:"Late",d30:"30 days",d90:"90 days"},total:"Total",none:"No payments in this period.",
+ mkDep:"✓ Deposited",mkBnc:"✗ Bounced",
+ repT:"Reports",repPlot:"Plot",repAll:"All plots",repGo:"View & print / save PDF",repHint:"In the print screen choose Share → Save to Files to keep it as a PDF.",
+ repCols:["#","Unit","Tenant","Phone","Contract no.","Start","End","Annual rent","Payments","Next payment","Status"],repSum:n=>`Total — ${n} units`,repTitle:p=>`Units — ${p} — Al Noud, Al Ain`,repDate:d=>`Status as of ${d}`,
+ calDone:"Calendar file ready. Tap “Add All” to add the dates to your phone calendar.",calPay:"💰 Payment",calEnd:"📌 Contract ends",calReg:"⚠️ Last day to register renewal",
+ r:{t:"Payment Receipt",no:"Receipt no.",date:"Date",from:"Received from",amount:"The sum of",for:"For",forV:(u,no,dt)=>`Rent of ${u} — contract no. ${no} — instalment due ${dt}`,method:"Payment method",cash:"Cash",chq:(n,b)=>`Cheque no. ${n||"—"}${b?" — "+b:""}`,sig:"Received by",tsig:"Tenant signature",mark:"Mark this payment as received?"},
+ saved:"Saved."}};
+const LX=()=>X[lang];
+const stChip=s=>`<span class="sc sc-${s}">${LX().st[s]||s}</span>`;
+function payTable(c){
+  const ps=payments(c),np=nextPay(c),x=LX();
+  return `<div class="paybox"><div class="payh"><b>${x.payH}</b><button type="button" class="edb" data-addpay="${c.no}">${x.addPay}</button></div>
+  ${isEst(c)?`<p class="muted small">${x.estNote}</p>`:""}
+  <table class="ptab"><tbody>${ps.map((p,i)=>`<tr class="${np&&i===np.i?"nxr":""}"><td class="n">${dmy(p.date)}</td><td class="n">${fmt(p.amount)}</td><td>${stChip(p.status)}</td><td class="n small">${esc(p.chq||"")}${p.bank?`<br><span class="muted">${esc(p.bank)}</span>`:""}</td>
+  <td class="pa"><button type="button" class="ib" data-pay="${c.no}|${i}" aria-label="edit">✎</button><button type="button" class="ib" data-rcpt="${c.no}|${i}" aria-label="receipt">🧾</button></td></tr>`).join("")}</tbody></table></div>`}
+function dash(){
+  const x=LX(),t=iso(today),y=today.getFullYear(),t30=iso(addDays(today,30));let coll=0,late=0,lateN=0,due=0,dueN=0,bnc=0;
+  DATA.forEach(c=>payments(c).forEach(p=>{
+    if(PAID.has(p.status)&&p.date.startsWith(String(y))&&!p.est&&!p.auto)coll+=+p.amount||0;
+    if(p.status==="bounced"){bnc++;late+=+p.amount||0;lateN++}
+    else if(p.status==="pending"&&p.date<t&&!p.est){late+=+p.amount||0;lateN++}
+    if(p.status==="pending"&&p.date>=t&&p.date<=t30){due+=+p.amount||0;dueN++}}));
+  let el=$("#dash");if(!el)return;
+  el.innerHTML=`<div class="tools"><button type="button" class="tb" id="tDue">${x.tools.due}</button><button type="button" class="tb" id="tRep">${x.tools.rep}</button><button type="button" class="tb" id="tCal">${x.tools.cal}</button></div>
+  <div class="dcards"><button type="button" class="dc g" id="dColl"><small>${x.d.coll(y)}</small><b>${fmt(coll)}</b></button>
+  <button type="button" class="dc a" data-duetab="d30"><small>${x.d.due30} (${dueN})</small><b>${fmt(due)}</b></button>
+  <button type="button" class="dc r" data-duetab="late"><small>${x.d.late} (${lateN})</small><b>${fmt(late)}</b></button></div>`}
+/* ---- payment editor ---- */
+let pyNo=null,pyIdx=-1;
+function openPay(no,idx){const c=DATA.find(x=>x.no===no);if(!c)return;pyNo=no;pyIdx=idx;const x=LX();
+  const p=idx>=0?payments(c)[idx]:{date:iso(today),amount:eqAmounts(c)[0],status:"pending"};
+  const st=p.status==="assumed"?"received":p.status;
+  $("#pyTitle").textContent=`${idx>=0?x.payT:x.newPayT} — ${unitOf(c)}`;
+  $("#pyForm").innerHTML=`<div class="fg"><label><span>${x.pf.date}</span><input type="date" name="date" value="${p.date}" required></label>
+  <label><span>${x.pf.amount}</span><input type="number" inputmode="decimal" name="amount" value="${p.amount}" required></label>
+  <label><span>${x.pf.status}</span><select name="status">${["pending","received","deposited","cash","bounced"].map(s=>`<option value="${s}"${s===st?" selected":""}>${x.st[s]}</option>`).join("")}</select></label>
+  <label><span>${x.pf.chq}</span><input name="chq" dir="ltr" value="${esc(p.chq||"")}"></label>
+  <label><span>${x.pf.bank}</span><input name="bank" value="${esc(p.bank||"")}"></label>
+  <label><span>${x.pf.note}</span><input name="note" value="${esc(p.note||"")}"></label></div>
+  <p class="err" id="pyErr"></p><div class="edbtns"><button type="submit" class="pri">${L().ed.save}</button><button type="button" id="pyCancel">${L().ed.cancel}</button>${idx>=0?`<button type="button" id="pyDel" class="dangerb">${x.delPay}</button>`:""}</div>`;
+  $("#pyModal").classList.add("on");document.body.style.overflow="hidden"}
+async function savePayments(c){try{await saveContract(c);refreshKeep();toast(LX().saved)}catch(err){alert(L().ed.saveErr+(err.message||err))}}
+function refreshKeep(){const open=[...document.querySelectorAll("details.unit[open]")].map(dd=>dd.querySelector("[data-edit]")?.dataset.edit);refresh();
+  open.forEach(no=>{const b=no&&document.querySelector(`[data-edit="${no}"]`);if(b){const dd=b.closest("details");dd.open=true}})}
+document.addEventListener("submit",async e=>{if(e.target.id!=="pyForm")return;e.preventDefault();
+  const c=DATA.find(x=>x.no===pyNo);if(!c)return;const fd=new FormData(e.target),g=k=>String(fd.get(k)??"").trim();
+  const p={date:g("date"),amount:Number(g("amount")),status:g("status")};["chq","bank","note"].forEach(k=>{if(g(k))p[k]=g(k)});
+  if(!p.date||!(p.amount>=0)){$("#pyErr").textContent=L().ed.required;return}
+  const list=ensurePayments(c);if(pyIdx>=0)list[pyIdx]=p;else list.push(p);list.sort((a,b)=>a.date<b.date?-1:1);c.n=list.length;
+  closeModal("#pyModal");await savePayments(c)});
+async function quickStatus(no,idx,status){const c=DATA.find(x=>x.no===no);if(!c)return;const list=ensurePayments(c);if(!list[idx])return;list[idx].status=status;await savePayments(c);if($("#dueModal").classList.contains("on"))drawDue()}
+/* ---- due list ---- */
+let dueTab="d30";
+function dueItems(tab){const t=iso(today),lim=iso(addDays(today,tab==="d90"?90:30)),out=[];
+  DATA.forEach(c=>payments(c).forEach((p,i)=>{
+    const late=(p.status==="bounced")||(p.status==="pending"&&p.date<t&&!p.est);
+    if(tab==="late"?late:(p.status==="pending"&&p.date>=t&&p.date<=lim))out.push({c,p,i})}));
+  return out.sort((a,b)=>a.p.date<b.p.date?-1:1)}
+function drawDue(){const x=LX(),items=dueItems(dueTab),sum=items.reduce((a,o)=>a+(+o.p.amount||0),0);
+  $("#dueTabs").innerHTML=["late","d30","d90"].map(k=>`<button type="button" class="chip" aria-pressed="${k===dueTab}" data-duetab="${k}">${x.tab[k]}</button>`).join("");
+  $("#dueBody").innerHTML=`<p class="dsum">${x.total}: <b>${L().aed(fmt(sum))}</b> · ${items.length}</p>`+(items.length?items.map(({c,p,i})=>`<div class="ditem"><div class="dd n">${dmy(p.date)}</div><div class="dm"><b>${esc(unitOf(c))}</b> — ${esc(tenantOf(c))}<br><span class="n">${L().aed(fmt(p.amount))}</span> ${stChip(p.status)} ${p.chq?`<span class="muted small">#${esc(p.chq)}${p.bank?" · "+esc(p.bank):""}</span>`:""}
+   <div class="dact"><button type="button" class="edb" data-quick="${c.no}|${i}|deposited">${x.mkDep}</button><button type="button" class="edb del" data-quick="${c.no}|${i}|bounced">${x.mkBnc}</button><button type="button" class="ib" data-pay="${c.no}|${i}">✎</button>${callBtn(c.phone)}</div></div></div>`).join(""):`<p class="muted">${x.none}</p>`)}
+function openDue(tab){dueTab=tab||dueTab;$("#dueTitle").textContent=LX().dueT;drawDue();$("#dueModal").classList.add("on");document.body.style.overflow="hidden"}
+/* ---- calendar (.ics) ---- */
+function icsDate(s){return s.replace(/-/g,"")}
+function icsEsc(s){return String(s).replace(/[\\;,]/g,m=>"\\"+m).replace(/\n/g,"\\n")}
+function buildIcs(){const x=LX(),t=iso(today),L1=["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//rent-alnoud//AR","CALSCALE:GREGORIAN","METHOD:PUBLISH","X-WR-CALNAME:"+icsEsc(lang==="ar"?"عقود الإيجار — النود":"Al Noud rents")];
+  const ev=(uid,date,title,desc,alarmDays)=>{const dt=icsDate(date),nx=icsDate(iso(addDays(d(date),1)));
+    L1.push("BEGIN:VEVENT","UID:"+uid+"@rent-alnoud","DTSTAMP:"+icsDate(t)+"T000000Z","DTSTART;VALUE=DATE:"+dt,"DTEND;VALUE=DATE:"+nx,"SUMMARY:"+icsEsc(title),"DESCRIPTION:"+icsEsc(desc),
+      "BEGIN:VALARM","TRIGGER:-P"+alarmDays+"D","ACTION:DISPLAY","DESCRIPTION:"+icsEsc(title),"END:VALARM","END:VEVENT")};
+  DATA.forEach(c=>{const u=unitOf(c),tn=tenantOf(c);
+    payments(c).forEach((p,i)=>{if((p.status==="pending"||p.status==="bounced")&&p.date>=t)ev(`p-${c.no}-${p.date}-${i}`,p.date,`${x.calPay}: ${u} — ${L().aed(fmt(p.amount))}`,`${tn}\n${c.no}${p.chq?"\n#"+p.chq:""}`,1)});
+    if(c.end>=t)ev(`e-${c.no}-${c.end}`,c.end,`${x.calEnd}: ${u}`,`${tn}\n${c.no}`,30);
+    const reg=iso(addDays(d(c.end),90));if(reg>=t)ev(`r-${c.no}-${reg}`,reg,`${x.calReg}: ${u}`,`${tn}\n${c.no}`,14)});
+  L1.push("END:VCALENDAR");return L1.join("\r\n")}
+function exportIcs(){const blob=new Blob([buildIcs()],{type:"text/calendar"});const url=URL.createObjectURL(blob);
+  const ios=/iP(hone|ad|od)/.test(navigator.userAgent);
+  if(ios){location.href=url}else{const a=document.createElement("a");a.href=url;a.download="rent-alnoud.ics";document.body.appendChild(a);a.click();a.remove()}
+  toast(LX().calDone)}
+/* ---- reports (print to PDF) ---- */
+function openRep(){const x=LX();$("#repTitle").textContent=x.repT;
+  $("#repBody").innerHTML=`<label class="rl"><span>${x.repPlot}</span><select id="repPlot"><option value="all">${x.repAll}</option>${["47","34","29"].map(p=>`<option value="${p}">${plotName(p)}</option>`).join("")}</select></label>
+  <p class="muted small">${x.repHint}</p><div class="edbtns"><button type="button" class="pri" id="repGo">${x.repGo}</button><button type="button" id="repClose">${L().ed.cancel}</button></div>`;
+  $("#repModal").classList.add("on");document.body.style.overflow="hidden"}
+function buildReport(plot){const x=LX(),plots=plot==="all"?["47","34","29"]:[plot];
+  let h=`<h1>${x.repTitle(plot==="all"?x.repAll:plotName(plot))}</h1><p class="rsub">${L().lessorLine} · ${x.repDate(dmy(iso(today)))}</p>`;let grand=0,gn=0;
+  plots.forEach(p=>{const G=DATA.filter(c=>c.plot===p).sort((a,b)=>a.end<b.end?-1:1);if(!G.length)return;const tot=G.reduce((a,c)=>a+(+c.annual||0),0);grand+=tot;gn+=G.length;
+    h+=`<table class="rt"><thead><tr class="rg"><th colspan="11">${plotName(p)} — ${G.length} — ${L().aed(fmt(tot))}</th></tr><tr>${x.repCols.map(c=>`<th>${c}</th>`).join("")}</tr></thead><tbody>`+
+    G.map((c,i)=>{const np=nextPay(c);return `<tr><td>${i+1}</td><td><b>${esc(unitOf(c))}</b></td><td>${esc(tenantOf(c))}</td><td class="n">${esc(c.phone||"—")}</td><td class="n">${c.no}</td><td class="n">${dmy(c.start)}</td><td class="n">${dmy(c.end)}</td><td class="n">${fmt(c.annual)}</td><td>${c.n} (${esc(methodOf(c))})</td><td class="n">${np?dmy(np.date)+" · "+fmt(np.amount):"—"}</td><td><span class="rp rp-${c.st.k}">${stText(c.st.k)}</span></td></tr>`}).join("")+
+    `<tr class="rs"><td colspan="7">${x.repSum(G.length)}</td><td class="n">${fmt(tot)}</td><td colspan="3"></td></tr></tbody></table>`});
+  if(plots.length>1)h+=`<p class="rgrand">${x.repSum(gn)}: <b>${L().aed(fmt(grand))}</b></p>`;
+  return h}
+function printReport(plot){const pa=$("#printArea");pa.innerHTML=buildReport(plot);closeModal("#repModal");document.body.classList.add("printing");
+  const done=()=>{document.body.classList.remove("printing");pa.innerHTML="";window.removeEventListener("afterprint",done)};window.addEventListener("afterprint",done);
+  setTimeout(()=>{window.print();setTimeout(()=>{if(document.body.classList.contains("printing")&&!matchMedia("print").matches)done()},1500)},150)}
+/* ---- receipt ---- */
+function drawReceipt(c,p,idx){const x=LX().r,W=1240,H=1000,M=90,rtl=lang==="ar";const cv=document.createElement("canvas");cv.width=W;cv.height=H;const g=cv.getContext("2d");
+  g.fillStyle="#fff";g.fillRect(0,0,W,H);g.direction=rtl?"rtl":"ltr";g.textAlign="start";g.textBaseline="top";const X0=rtl?W-M:M,sign=rtl?-1:1;
+  g.fillStyle="#1B2A41";g.fillRect(0,0,W,170);g.fillStyle="#fff";g.font=`700 52px ${FONT}`;g.fillText(x.t,X0,40);
+  g.font=`400 24px ${FONT}`;g.fillStyle="#D5DBE1";g.fillText(LESSOR[lang],X0,112);
+  const rno=`${c.no}-${idx+1}`;const rows=[[x.no,rno],[x.date,dmy(iso(today))],[x.from,tenantOf(c)],[x.amount,L().aed(fmt(p.amount))],[x.for,x.forV(unitOf(c),c.no,dmy(p.date))],[x.method,p.status==="cash"?x.cash:x.chq(p.chq,p.bank)]];
+  let y=220;const labW=300,valX=X0+sign*(labW+20),valW=W-2*M-labW-20;
+  const wrap=(t,mw)=>{const ws=String(t).split(" "),ls=[];let cur="";ws.forEach(w=>{const tt=cur?cur+" "+w:w;if(g.measureText(tt).width>mw&&cur){ls.push(cur);cur=w}else cur=tt});if(cur)ls.push(cur);return ls};
+  rows.forEach(([k,v],i)=>{g.font=`600 30px ${FONT}`;const vl=wrap(v,valW);const h=vl.length*42+30;
+    g.fillStyle="#5B6878";g.font=`400 26px ${FONT}`;g.fillText(k,X0,y+16);g.fillStyle=i===3?"#1F7A4D":"#1B2A41";g.font=`${i===3?700:500} ${i===3?36:30}px ${FONT}`;vl.forEach((l,j)=>g.fillText(l,valX,y+12+j*42));
+    y+=h;g.fillStyle="#E3E7EC";g.fillRect(M,y,W-2*M,2)});
+  const sy=H-150;g.fillStyle="#1B2A41";g.font=`500 26px ${FONT}`;
+  g.fillText(x.sig,X0,sy);g.fillText(x.tsig,rtl?W/2-20:W/2+20,sy);g.fillStyle="#9AA4B1";g.fillRect(rtl?W/2+40:M,sy+80,W/2-M-40,2);g.fillRect(rtl?M:W/2+20,sy+80,W/2-M-40,2);
+  return cv}
+async function shareReceipt(no,idx){const c=DATA.find(x=>x.no===no);if(!c)return;const p=payments(c)[idx];if(!p)return;
+  try{await document.fonts.ready}catch(e){}
+  const cv=drawReceipt(c,p,idx);const jpg=await new Promise(r=>cv.toBlob(r,"image/jpeg",0.92));const bytes=new Uint8Array(await jpg.arrayBuffer());
+  const file=new File([jpegToPdf(bytes,cv.width,cv.height,true)],`receipt-${c.no}-${idx+1}.pdf`,{type:"application/pdf"});
+  try{if(navigator.canShare&&navigator.canShare({files:[file]})){await navigator.share({files:[file]})}else{const a=document.createElement("a");a.href=URL.createObjectURL(file);a.download=file.name;document.body.appendChild(a);a.click();a.remove()}}catch(err){if(err&&err.name!=="AbortError")toast(L().waErr)}
+  if(p.status==="pending"&&confirm(LX().r.mark)){const list=ensurePayments(c);const k=list.findIndex(q=>q.date===p.date&&+q.amount===+p.amount);if(k>=0){list[k].status="received";await savePayments(c)}}}
+/* ---- events ---- */
+document.addEventListener("click",async e=>{
+  const t=e.target.closest("[data-renew],[data-pay],[data-addpay],[data-rcpt],[data-quick],[data-duetab],#tDue,#tRep,#tCal,#pyCancel,#pyDel,#dueClose,#repGo,#repClose");if(!t)return;
+  if(t.dataset.renew)openEditor(t.dataset.renew,"renew");
+  else if(t.dataset.pay){const [no,i]=t.dataset.pay.split("|");openPay(no,+i)}
+  else if(t.dataset.addpay)openPay(t.dataset.addpay,-1);
+  else if(t.dataset.rcpt){const [no,i]=t.dataset.rcpt.split("|");shareReceipt(no,+i)}
+  else if(t.dataset.quick){const [no,i,s]=t.dataset.quick.split("|");quickStatus(no,+i,s)}
+  else if(t.dataset.duetab){if($("#dueModal").classList.contains("on")){dueTab=t.dataset.duetab;drawDue()}else openDue(t.dataset.duetab)}
+  else if(t.id==="tDue")openDue("d30");
+  else if(t.id==="tRep")openRep();
+  else if(t.id==="tCal")exportIcs();
+  else if(t.id==="pyCancel")closeModal("#pyModal");
+  else if(t.id==="pyDel"){if(!confirm(LX().confirmDelPay))return;const c=DATA.find(x=>x.no===pyNo);const list=ensurePayments(c);list.splice(pyIdx,1);c.n=Math.max(1,list.length);closeModal("#pyModal");await savePayments(c)}
+  else if(t.id==="dueClose")closeModal("#dueModal");
+  else if(t.id==="repGo")printReport($("#repPlot").value);
+  else if(t.id==="repClose")closeModal("#repModal");
+});
 
 </script>
 </body>
