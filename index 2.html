@@ -53,7 +53,7 @@ section.bld h2{font-size:1.05rem;margin:0 0 8px;color:var(--mute);font-weight:50
 details.unit{background:var(--card);border:1px solid var(--line);border-inline-start:6px solid var(--green);border-radius:10px;margin-bottom:10px}
 details.unit.s-exp,details.unit.s-closed{border-inline-start-color:var(--red);background:#FFFBFA}
 details.unit.s-soon{border-inline-start-color:var(--amber)}
-summary{list-style:none;cursor:pointer;padding:12px 14px;display:grid;grid-template-columns:1fr auto;gap:2px 12px}
+summary{list-style:none;cursor:pointer;padding:12px 14px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 12px}
 summary::-webkit-details-marker{display:none}
 .uname{font-size:1.2rem;font-weight:700}
 .tenant{grid-column:1;color:var(--mute);font-size:.92rem}
@@ -116,6 +116,12 @@ dd .call{margin-inline-start:8px;padding:3px 10px;font-size:.82rem}
 .edrow{display:flex;gap:8px;margin:12px 0 4px}
 .edb{border:1px solid var(--line);background:#fff;border-radius:8px;padding:4px 12px;font:inherit;font-size:.85rem;cursor:pointer}
 .edb.del{color:#B42318;border-color:#F3C4C0}
+.np{font-size:.9rem!important;grid-column:1/-1;justify-self:start;margin:2px 0 4px;background:#FDECEA;color:#C62828;border:1px solid #F5B5AE;border-radius:999px;padding:1px 10px;font-size:.82rem;font-weight:700;white-space:nowrap}
+.pays{grid-column:1/-1;display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin-top:8px;font-size:.92rem}
+.pays .ph{font-weight:700;color:var(--ink)}.pays .ph small{font-weight:400;color:var(--mute)}
+.pd{background:#F1F3F6;border:1px solid var(--line);border-radius:7px;padding:2px 8px;font-weight:600;color:var(--ink);direction:ltr;unicode-bidi:isolate}
+.pd.past{color:#9AA4B1;text-decoration:line-through;background:#F7F8FA}
+.pd.nx{background:#C62828;border-color:#C62828;color:#fff}
 .auto{background:#EEF6F1;border:1px dashed #1F7A4D;border-radius:10px;padding:10px 12px;margin-bottom:12px}.auto p{margin:4px 0 8px;font-size:.85rem;color:#33503F}.auto #autoSt{margin:8px 0 0;color:#1F7A4D;font-weight:600}
 #edForm .filled{background:#E3F4EA;border-color:#1F7A4D}
 .pdft{display:flex;align-items:center;justify-content:center;flex-direction:column;width:100%;height:100%;background:#FDECEC;color:#B42318;font-weight:700;text-decoration:none;font-size:.85rem;text-align:center}
@@ -205,13 +211,13 @@ const LESSOR={ar:"اي تو زد بروجيكتس لإدارة المشاريع 
 const LESSOR_PHONE="971508632030";
 
 const T={
-ar:{ed:{autoT:"📄 قراءة العقد تلقائياً",autoP:"ارفع ملف PDF العقد (من توثيق / داري) أو صور صفحاته، وتتعبّى البيانات تلقائياً. راجعها ثم احفظ. الملفات تنحفظ مع العقد.",autoBtn:"اختر PDF أو صور",readingPdf:"جارٍ قراءة ملف PDF…",readingImg:"جارٍ قراءة الصورة (قد يأخذ دقيقة)…",autoDone:n=>`تمت تعبئة ${n} حقل تلقائياً (المظللة بالأخضر). راجعها قبل الحفظ.`,autoNone:"ما قدرت أقرأ بيانات من الملف. عبّئ الحقول يدوياً — الملف بينحفظ مع العقد.",pend:n=>`${n} ملف بينحفظ مع العقد`,openPdf:"فتح PDF",imgsT:"صور العقد",noImgs:"لا توجد صور بعد.",uploading:"جارٍ رفع الصور…",delImg:"حذف هذا الملف؟",loading:"جارٍ تحميل البيانات…",saving:"جارٍ الحفظ…",saveErr:"تعذّر الحفظ: ",empty:"لا توجد عقود في قاعدة البيانات بعد. افتح صفحة migrate.html لنقل العقود الحالية.",key:"مفتاح Supabase (anon)",done:"تم",edit:"تعديل",del:"حذف",add:"+ إضافة عقد",save:"حفظ",cancel:"إلغاء",editT:"تعديل العقد",addT:"إضافة عقد جديد",
+ar:{ed:{autoT:"📄 قراءة العقد تلقائياً",autoP:"ارفع ملف PDF العقد (من توثيق / داري) أو صور صفحاته، وتتعبّى البيانات تلقائياً. راجعها ثم احفظ. الملفات تنحفظ مع العقد.",autoBtn:"اختر PDF أو صور",readingPdf:"جارٍ قراءة ملف PDF…",readingImg:"جارٍ قراءة الصورة (قد يأخذ دقيقة)…",autoDone:n=>`تمت تعبئة ${n} حقل تلقائياً (المظللة بالأخضر). راجعها قبل الحفظ.`,autoNone:"ما قدرت أقرأ بيانات من الملف. عبّئ الحقول يدوياً — الملف بينحفظ مع العقد.",pend:n=>`${n} ملف بينحفظ مع العقد`,openPdf:"فتح PDF",imgsBtn:"الصور والملفات",imgsT:"صور وملفات العقد",noImgs:"لا توجد صور أو ملفات بعد.",uploading:"جارٍ رفع الصور…",delImg:"حذف هذا الملف؟",loading:"جارٍ تحميل البيانات…",saving:"جارٍ الحفظ…",saveErr:"تعذّر الحفظ: ",empty:"لا توجد عقود في قاعدة البيانات بعد. افتح صفحة migrate.html لنقل العقود الحالية.",key:"مفتاح Supabase (anon)",done:"تم",edit:"تعديل",del:"حذف",add:"+ إضافة عقد",save:"حفظ",cancel:"إلغاء",editT:"تعديل العقد",addT:"إضافة عقد جديد",
   confirmDel:u=>`حذف عقد ${u} نهائياً مع صوره؟`,banner:"لديك تعديلات محفوظة على هذا الجهاز فقط. لتظهر للجميع: اضغط «تحميل نسخة للموقع» وارفع الملف على GitHub مكان index 2.html.",
   export:"تحميل نسخة للموقع",reset:"إلغاء كل التعديلات",confirmReset:"سيتم حذف كل التعديلات المحفوظة على هذا الجهاز والرجوع للنسخة الأصلية. متأكد؟",
-  saved:"تم الحفظ.",required:"عبّئ الحقول المطلوبة (*).",dup:"رقم العقد موجود في عقد آخر.",exported:"تم تحميل الملف. ارفعه على GitHub مكان index 2.html.",
-  imgs:"صور العقد",addImgs:"إضافة صور أو PDF",notesHint:"كل ملاحظة في سطر",imgBusy:"جارٍ تجهيز الصور…",
+  saved:"تم الحفظ.",required:"عبّئ الحقول المطلوبة (*).",payErr:"تاريخ دفعة غير صحيح. اكتبه مثل 15/12/2026.",dup:"رقم العقد موجود في عقد آخر.",exported:"تم تحميل الملف. ارفعه على GitHub مكان index 2.html.",
+  imgs:"صور العقد",addImgs:"إضافة صور أو PDF",notesHint:"كل ملاحظة في سطر",paysF:"مواعيد الدفعات الفعلية (اختياري)",paysHint:"تاريخ في كل سطر، مثل 15/12/2026 — إذا تركته فاضي تُحسب تلقائياً",imgBusy:"جارٍ تجهيز الصور…",
   f:{unit:"الوحدة * (مثال: محل 12)",plot:"القسيمة *",kind:"نوع الوحدة",area:"المساحة م²",reg:"رقم تسجيل الوحدة",premise:"معرّف العقار",tenant:"المستأجر *",tenant_en:"اسم المستأجر بالإنجليزي",phone:"الهاتف",no:"رقم العقد *",issue:"تاريخ الإصدار",start:"تاريخ البداية *",end:"تاريخ النهاية *",annual:"الإيجار السنوي *",value:"قيمة العقد",n:"عدد الدفعات *",method:"طريقة السداد",registry:"التسجيل",notes:"ملاحظات",cheque:"الشيك المرفق"}},
-title:"عقود الإيجار",gateP:"ادخل باسم المستخدم وكلمة المرور.",user:"البريد الإلكتروني",pass:"كلمة المرور",signin:"دخول",badLogin:"البريد أو كلمة المرور غير صحيحة.",
+paysT:"مواعيد الدفعات",estW:"تقديرية",nextPay:"الدفعة القادمة",todayW:"اليوم",inDays:n=>`بعد ${n} يوم`,title:"عقود الإيجار",gateP:"ادخل باسم المستخدم وكلمة المرور.",user:"البريد الإلكتروني",pass:"كلمة المرور",signin:"دخول",badLogin:"البريد أو كلمة المرور غير صحيحة.",
  prev:"السابقة",next:"التالية",close:"إغلاق",logout:"خروج",langBtn:"English",
  lessorLine:"المؤجر: "+LESSOR.ar+" — النود، العين",dueH:"يحتاج تحرّك الآن",
  search:"ابحث باسم المستأجر أو رقم الوحدة أو رقم العقد",fAll:"الكل",fExp:"منتهي",fSoon:"قريب الانتهاء",fOk:"ساري",fNotes:"فيه ملاحظات",
@@ -230,13 +236,13 @@ title:"عقود الإيجار",gateP:"ادخل باسم المستخدم وكل
  pdfEnds:e=>`ينتهي هذا العقد في ${e}. نرجو التواصل معنا لترتيب التجديد.`,pdfEnded:e=>`انتهى هذا العقد في ${e}. نرجو التواصل معنا فوراً لتجديده.`,
  pdfContact:p=>`للتواصل: ${p}`,pdfDate:d=>`تاريخ الإصدار: ${d}`,
  msg:(t,no,u,e)=>`مرحباً ${t}،\nمرفق ملخص عقد الإيجار رقم ${no} (${u}).\nتاريخ نهاية العقد: ${e}.\nمع التحية،\n${LESSOR.ar}`},
-en:{ed:{autoT:"📄 Read contract automatically",autoP:"Upload the contract PDF (from Tawtheeq / Dari) or photos of its pages and the details fill in automatically. Review them, then save. The files are saved with the contract.",autoBtn:"Choose PDF or photos",readingPdf:"Reading PDF…",readingImg:"Reading photo (may take a minute)…",autoDone:n=>`${n} fields filled automatically (highlighted in green). Review them before saving.`,autoNone:"Couldn't read details from the file. Fill the fields manually — the file will be saved with the contract.",pend:n=>`${n} file(s) will be saved with the contract`,openPdf:"Open PDF",imgsT:"Contract images",noImgs:"No images yet.",uploading:"Uploading images…",delImg:"Delete this file?",loading:"Loading data…",saving:"Saving…",saveErr:"Couldn't save: ",empty:"No contracts in the database yet. Open migrate.html to move the current contracts.",key:"Supabase key (anon)",done:"Done",edit:"Edit",del:"Delete",add:"+ Add contract",save:"Save",cancel:"Cancel",editT:"Edit contract",addT:"Add new contract",
+en:{ed:{autoT:"📄 Read contract automatically",autoP:"Upload the contract PDF (from Tawtheeq / Dari) or photos of its pages and the details fill in automatically. Review them, then save. The files are saved with the contract.",autoBtn:"Choose PDF or photos",readingPdf:"Reading PDF…",readingImg:"Reading photo (may take a minute)…",autoDone:n=>`${n} fields filled automatically (highlighted in green). Review them before saving.`,autoNone:"Couldn't read details from the file. Fill the fields manually — the file will be saved with the contract.",pend:n=>`${n} file(s) will be saved with the contract`,openPdf:"Open PDF",imgsBtn:"Images & files",imgsT:"Contract images & files",noImgs:"No images or files yet.",uploading:"Uploading images…",delImg:"Delete this file?",loading:"Loading data…",saving:"Saving…",saveErr:"Couldn't save: ",empty:"No contracts in the database yet. Open migrate.html to move the current contracts.",key:"Supabase key (anon)",done:"Done",edit:"Edit",del:"Delete",add:"+ Add contract",save:"Save",cancel:"Cancel",editT:"Edit contract",addT:"Add new contract",
   confirmDel:u=>`Permanently delete the ${u} contract and its images?`,banner:"You have changes saved on this device only. To publish them: tap “Download site copy” and upload the file to GitHub in place of index 2.html.",
   export:"Download site copy",reset:"Discard all changes",confirmReset:"This deletes all changes saved on this device and returns to the original version. Are you sure?",
-  saved:"Saved.",required:"Fill in the required fields (*).",dup:"This contract number already exists.",exported:"File downloaded. Upload it to GitHub in place of index 2.html.",
-  imgs:"Contract images",addImgs:"Add photos or PDF",notesHint:"One note per line",imgBusy:"Preparing images…",
+  saved:"Saved.",required:"Fill in the required fields (*).",payErr:"Invalid payment date. Write it like 15/12/2026.",dup:"This contract number already exists.",exported:"File downloaded. Upload it to GitHub in place of index 2.html.",
+  imgs:"Contract images",addImgs:"Add photos or PDF",notesHint:"One note per line",paysF:"Actual payment dates (optional)",paysHint:"One date per line, e.g. 15/12/2026 — leave empty to estimate automatically",imgBusy:"Preparing images…",
   f:{unit:"Unit * (e.g. محل 12)",plot:"Plot *",kind:"Unit type",area:"Area m²",reg:"Unit reg. no.",premise:"Premise no.",tenant:"Tenant *",tenant_en:"Tenant name in English",phone:"Phone",no:"Contract no. *",issue:"Issue date",start:"Start date *",end:"End date *",annual:"Annual rent *",value:"Contract value",n:"Payments *",method:"Payment method",registry:"Registry",notes:"Notes",cheque:"Attached cheque"}},
-title:"Tenancy contracts",gateP:"Sign in with your username and password.",user:"Email",pass:"Password",signin:"Sign in",badLogin:"Wrong email or password.",
+paysT:"Payment dates",estW:"estimated",nextPay:"Next payment",todayW:"today",inDays:n=>`in ${n} days`,title:"Tenancy contracts",gateP:"Sign in with your username and password.",user:"Email",pass:"Password",signin:"Sign in",badLogin:"Wrong email or password.",
  prev:"Previous",next:"Next",close:"Close",logout:"Sign out",langBtn:"العربية",
  lessorLine:"Lessor: "+LESSOR.en+" — Al Noud, Al Ain",dueH:"Needs action now",
  search:"Search by tenant, unit or contract no.",fAll:"All",fExp:"Expired",fSoon:"Ending soon",fOk:"Active",fNotes:"Has notes",
@@ -304,11 +310,18 @@ const stText=k=>({closed:L().stClosed,exp:L().stExp,soon:L().stSoon,ok:L().stOk}
 DATA.forEach(c=>c.st=status(c));
 
 function row(k,v){const e=(v===undefined||v===null||v===""||v==="—"||v==="غير متوفر");return `<dt>${k}</dt><dd${e?' class="na"':''}>${e?L().na:v}</dd>`}
-function scheduleArr(c){
+function schedISO(c){
+  if(Array.isArray(c.pays)&&c.pays.length)return c.pays.slice().sort();
   const s=d(c.start),e=d(c.end),span=e-s,out=[];
-  for(let i=0;i<c.n;i++){out.push(dmy(iso(new Date(s.getTime()+span*i/c.n))))}
+  for(let i=0;i<c.n;i++){out.push(iso(new Date(s.getTime()+span*i/c.n)))}
   return out;
 }
+function scheduleArr(c){return schedISO(c).map(dmy)}
+function nextPay(c){const t=iso(today);const all=schedISO(c);const i=all.findIndex(x=>x>=t);return i<0?null:{i,date:all[i],days:Math.round((d(all[i])-today)/DAY)}}
+function paysHtml(c){
+  const all=schedISO(c),np=nextPay(c),t=iso(today),est=!(Array.isArray(c.pays)&&c.pays.length);
+  return `<span class="pays"><span class="ph">${L().paysT}${est?` <small>(${L().estW})</small>`:""}:</span>${all.map((x,i)=>`<span class="pd${np&&i===np.i?" nx":x<t?" past":""}">${dmy(x)}</span>`).join("")}</span>`}
+function npBadge(c){const np=nextPay(c);if(!np)return "";return `<span class="np">● ${L().nextPay}: ${dmy(np.date)} · ${np.days===0?L().todayW:L().inDays(np.days)}</span>`}
 function card(c){
   const st=c.st, per=Math.round(c.value/c.n), R=L().r;
   const phone=telOf(c.phone)?`${c.phone} ${callBtn(c.phone)} ${waChatBtn(c.phone)}`:c.phone;
@@ -319,8 +332,9 @@ function card(c){
   const tn=c.tenant==="غير متوفر"?L().unknownTenant:tenantOf(c);
   const imgs=(c.imgs||[]).length;
   return `<details class="unit s-${st.k}">
-  <summary><span class="uname">${unitOf(c)}</span><span class="pill p-${st.k}">${stText(st.k)}</span>
+  <summary><span class="uname">${unitOf(c)}</span><span class="pill p-${st.k}">${stText(st.k)}</span>${npBadge(c)}
   <span class="tenant">${esc(tn)}</span><span class="rent">${fmt(c.annual)} ${L().perYear}</span>
+  ${paysHtml(c)}
   <span class="acts">${callBtn(c.phone)}${waChatBtn(c.phone)}${waBtn(c)}</span></summary>
   <div class="body"><dl>
   ${row(R.no,c.no)}${row(R.tenant,esc(tenantOf(c)))}${row(R.phone,phone)}
@@ -559,6 +573,7 @@ function openEditor(no){
   edPend=[];
   $("#edForm").innerHTML=`<div class="auto"><b>${E.autoT}</b><p>${E.autoP}</p><label class="addimg">${E.autoBtn}<input type="file" id="edAuto" accept="application/pdf,image/*" multiple hidden></label><p id="autoSt" class="muted"></p></div>
    <div class="fg">${FIELDS.map(k=>fieldHtml(k,c[k]==="—"?"":c[k])).join("")}</div>
+   <label class="full"><span>${E.paysF} <small>(${E.paysHint})</small></span><textarea name="pays" rows="3" dir="ltr">${esc((c.pays||[]).map(dmy).join("\n"))}</textarea></label>
    <label class="full"><span>${E.f.notes} <small>(${E.notesHint})</small></span><textarea name="notes" rows="4">${esc((c.notes||[]).join("\n"))}</textarea></label>
    <label class="full"><span>${E.f.cheque}</span><textarea name="cheque" rows="3">${esc(c.cheque||"")}</textarea></label>
    <p id="edErr" class="err" role="alert"></p>
@@ -583,6 +598,9 @@ document.addEventListener("submit",async e=>{
   if(!old||JSON.stringify(notes)!==JSON.stringify(old.notes||[])){c.notes=notes;delete c.notes_en}
   if(!old||cheque!==(old.cheque||null)){c.cheque=cheque;delete c.cheque_en}
   if(old&&old.unit!==c.unit)delete c.unit_en;
+  const pays=g("pays").split(/[\n,،]+/).map(x=>x.trim()).filter(Boolean).map(x=>{let m=x.match(/^(\d{1,2})[\/\-.](\d{1,2})[\/\-.](\d{4})$/);if(m)return `${m[3]}-${m[2].padStart(2,"0")}-${m[1].padStart(2,"0")}`;m=x.match(/^(\d{4})-(\d{1,2})-(\d{1,2})$/);if(m)return `${m[1]}-${m[2].padStart(2,"0")}-${m[3].padStart(2,"0")}`;return null});
+  if(pays.some(x=>!x)){$("#edErr").textContent=E.payErr;return}
+  if(pays.length)c.pays=pays.sort();else delete c.pays;
   c.imgs=(old&&old.imgs)||[];
   const btn=e.target.querySelector("button[type=submit]");btn.disabled=true;btn.textContent=E.saving;
   try{await saveContract(c,old&&old.no)}catch(err){$("#edErr").textContent=E.saveErr+(err.message||err);btn.disabled=false;btn.textContent=E.save;return}
