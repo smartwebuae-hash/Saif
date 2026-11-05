@@ -244,6 +244,9 @@ dd .call{margin-inline-start:8px;padding:3px 10px;font-size:.82rem}
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <script>let DATA=[];let IMGS={};</script>
 <script>
+/* إيميل حساب الدخول في Supabase (Authentication ← Users).
+   إذا كُتب هنا، تطلب صفحة الدخول كلمة المرور فقط. إذا تُرك فارغاً، تظهر خانة الإيميل كالسابق. */
+const LOGIN_EMAIL="";
 const PLOTS={ar:{"47":"قسيمة 47 — شارع 71 (PRP11441493)","34":"قسيمة 34 — شارع 71 (PRP809551)","29":"قسيمة 29 — شارع 57 (PRP815149)"},
   en:{"47":"Plot 47 — Road 71 (PRP11441493)","34":"Plot 34 — Road 71 (PRP809551)","29":"Plot 29 — Road 57 (PRP815149)"}};
 const LESSOR={ar:"اي تو زد بروجيكتس لإدارة المشاريع التجارية والعقارات",en:"A TO Z Projects to Manage Commercial and Real Estate Projects"};
@@ -256,7 +259,7 @@ ar:{ed:{autoT:"📄 قراءة العقد تلقائياً",autoP:"ارفع مل
   saved:"تم الحفظ.",required:"عبّئ الحقول المطلوبة (*).",payErr:"تاريخ دفعة غير صحيح. اكتبه مثل 15/12/2026.",dup:"رقم العقد موجود في عقد آخر.",exported:"تم تحميل الملف. ارفعه على GitHub مكان index 2.html.",
   imgs:"صور العقد",addImgs:"إضافة صور أو PDF",notesHint:"كل ملاحظة في سطر",paysF:"مواعيد الدفعات الفعلية (اختياري)",paysHint:"تاريخ في كل سطر، مثل 15/12/2026 — إذا تركته فاضي تُحسب تلقائياً",imgBusy:"جارٍ تجهيز الصور…",
   f:{unit:"الوحدة * (مثال: محل 12)",plot:"القسيمة *",kind:"نوع الوحدة",area:"المساحة م²",reg:"رقم تسجيل الوحدة",premise:"معرّف العقار",tenant:"المستأجر *",tenant_en:"اسم المستأجر بالإنجليزي",phone:"الهاتف",no:"رقم العقد *",issue:"تاريخ الإصدار",start:"تاريخ البداية *",end:"تاريخ النهاية *",annual:"الإيجار السنوي *",value:"قيمة العقد",n:"عدد الدفعات *",method:"طريقة السداد",registry:"التسجيل",notes:"ملاحظات",cheque:"الشيك المرفق"}},
-paysT:"مواعيد الدفعات",estW:"تقديرية",nextPay:"الدفعة القادمة",todayW:"اليوم",inDays:n=>`بعد ${n} يوم`,title:"عقود الإيجار",gateP:"ادخل باسم المستخدم وكلمة المرور.",user:"البريد الإلكتروني",pass:"كلمة المرور",signin:"دخول",badLogin:"البريد أو كلمة المرور غير صحيحة.",
+paysT:"مواعيد الدفعات",estW:"تقديرية",nextPay:"الدفعة القادمة",todayW:"اليوم",inDays:n=>`بعد ${n} يوم`,title:"عقود الإيجار",gateP:LOGIN_EMAIL?"ادخل كلمة المرور.":"ادخل باسم المستخدم وكلمة المرور.",user:"البريد الإلكتروني",pass:"كلمة المرور",signin:"دخول",badLogin:LOGIN_EMAIL?"كلمة المرور غير صحيحة.":"البريد أو كلمة المرور غير صحيحة.",
  prev:"السابقة",next:"التالية",close:"إغلاق",logout:"خروج",langBtn:"English",
  lessorLine:"المؤجر: "+LESSOR.ar+" — النود، العين",dueH:"يحتاج تحرّك الآن",
  search:"ابحث باسم المستأجر أو رقم الوحدة أو رقم العقد",fAll:"الكل",fExp:"منتهي",fSoon:"قريب الانتهاء",fOk:"ساري",fNotes:"فيه ملاحظات",
@@ -281,7 +284,7 @@ en:{ed:{autoT:"📄 Read contract automatically",autoP:"Upload the contract PDF 
   saved:"Saved.",required:"Fill in the required fields (*).",payErr:"Invalid payment date. Write it like 15/12/2026.",dup:"This contract number already exists.",exported:"File downloaded. Upload it to GitHub in place of index 2.html.",
   imgs:"Contract images",addImgs:"Add photos or PDF",notesHint:"One note per line",paysF:"Actual payment dates (optional)",paysHint:"One date per line, e.g. 15/12/2026 — leave empty to estimate automatically",imgBusy:"Preparing images…",
   f:{unit:"Unit * (e.g. محل 12)",plot:"Plot *",kind:"Unit type",area:"Area m²",reg:"Unit reg. no.",premise:"Premise no.",tenant:"Tenant *",tenant_en:"Tenant name in English",phone:"Phone",no:"Contract no. *",issue:"Issue date",start:"Start date *",end:"End date *",annual:"Annual rent *",value:"Contract value",n:"Payments *",method:"Payment method",registry:"Registry",notes:"Notes",cheque:"Attached cheque"}},
-paysT:"Payment dates",estW:"estimated",nextPay:"Next payment",todayW:"today",inDays:n=>`in ${n} days`,title:"Tenancy contracts",gateP:"Sign in with your username and password.",user:"Email",pass:"Password",signin:"Sign in",badLogin:"Wrong email or password.",
+paysT:"Payment dates",estW:"estimated",nextPay:"Next payment",todayW:"today",inDays:n=>`in ${n} days`,title:"Tenancy contracts",gateP:LOGIN_EMAIL?"Enter your password.":"Sign in with your username and password.",user:"Email",pass:"Password",signin:"Sign in",badLogin:LOGIN_EMAIL?"Wrong password.":"Wrong email or password.",
  prev:"Previous",next:"Next",close:"Close",logout:"Sign out",langBtn:"العربية",
  lessorLine:"Lessor: "+LESSOR.en+" — Al Noud, Al Ain",dueH:"Needs action now",
  search:"Search by tenant, unit or contract no.",fAll:"All",fExp:"Expired",fSoon:"Ending soon",fOk:"Active",fNotes:"Has notes",
@@ -436,12 +439,14 @@ function applyLang(){
 }
 document.querySelectorAll("[data-lang-toggle]").forEach(b=>b.onclick=()=>{lang=lang==="ar"?"en":"ar";try{localStorage.setItem("lang",lang)}catch(e){}applyLang()});
 
+if(LOGIN_EMAIL){const u=$("#u");u.value=LOGIN_EMAIL;u.required=false;u.style.display="none";
+  const l=document.querySelector('label[for="u"]');if(l)l.style.display="none";}
 function start(){$("#gate").hidden=true;$("#gate").style.display="none";$("#app").hidden=false;header();render()}
 $("#loginForm").addEventListener("submit",async e=>{e.preventDefault();$("#err").textContent="";
   const key=SB_KEY||$("#k").value.trim();if(!key){$("#err").textContent=L().ed.key;return}
   if(!sb)mkClient(key);
   const btn=e.target.querySelector("button[type=submit]");btn.disabled=true;
-  const {error}=await sb.auth.signInWithPassword({email:$("#u").value.trim(),password:$("#p").value});
+  const {error}=await sb.auth.signInWithPassword({email:LOGIN_EMAIL||$("#u").value.trim(),password:$("#p").value});
   btn.disabled=false;
   if(error){$("#err").textContent=L().badLogin;if(!SB_KEY)sb=null;return}
   if(!SB_KEY){try{localStorage.setItem("sbKey",key)}catch(x){}}
